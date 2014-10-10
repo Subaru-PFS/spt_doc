@@ -7,9 +7,9 @@
 \definecolor{ccols}{rgb}{0.7,0.25,0}
 \definecolor{ccolm}{rgb}{0,1,0}
 \definecolor{ccoll}{rgb}{0,0.25,0.5}
-\newcommand{\cols}[1]{\textcolor{ccols}{#1}}
-\newcommand{\colm}[1]{\textcolor{ccolm}{#1}}
-\newcommand{\coll}[1]{\textcolor{ccoll}{#1}}
+\newcommand{\cols}[1]{\textcolor{ccols}{\thesubsubsection-#1}}
+\newcommand{\colm}[1]{\textcolor{ccolm}{\thesubsubsection-#1}}
+\newcommand{\coll}[1]{\textcolor{ccoll}{\thesubsubsection-#1}}
 
 \begin{document}
 
@@ -35,20 +35,8 @@ and in Section 3 questions and future discussion items are listed so
 that replies from the science team to them can be considered as pieces
 of the requirements to the software components.
 
-\section{Reference documents/materials}
-
-\begin{itemize}
- 
- \item A presentation by Michael Strauss (Princeton) in the 5th
-       collaboration meeting at Sao Paulo, titled ``SDSS survey
-       design \& operation: Inputs for PFS'':
-       \url{http://sumire.pbworks.com/w/file/fetch/70573145/Strauss_sdss_spectroscopy.pdf}
- \item An overview presentation of the current status of PFS data
-       reduction pipeline by Steve Bickerton (Kavli IPMU): \url{}
- \item SDSS Data Release website: \url{http://www.sdss.org/dr7/}
- \item A presentation file from LAM about an example of archive system
-       for an other survey: 
-\end{itemize}
+From SDSS, Michael Strauss gave us a presentation titled "SDSS survey
+design \& operation: Inputs for PFS".
 
 \section{PFS Survey Basics}
 
@@ -132,6 +120,7 @@ and software will assign targets into fiber positioners and exposures.
 Some targets requires multiple exposures to complete required exposure time, 
 and multiple exposures will be assigned for these targets
 (middle bottom table). 
+
 
 \subsubsection{Observation at the summit}
 
@@ -353,10 +342,9 @@ follows:
 
 {\bf Important notes:}
 \begin{itemize}
- \item Replies do NOT need to be based on solid plans. Please tell us
-       current versions of them, which should give us ideas of your
-       requirements and restrictions to the software system and should
-       be a good starting point of discussion.
+ \item Replies do NOT need to be based on solid plans of your
+   surveys. Please tell us current ideas, which should be a good
+   starting point of discussion.
        (So, any comment or suggestion is welcome, even not an idea nor reply.) 
  \item Honestly speaking, there may be some important questions and
        discussion items that are missed from this document, so comments
@@ -371,6 +359,11 @@ follows:
     \item My survey has different types of requirements such as ... 
     \item ... etc
        \end{itemize}
+ \item The questions presetend in this document are the first
+   set. Your replies to them will then allow us to send you more
+   advanced questins. There are a number of subjects which need to be
+   iteratively discussed for us to correctly understand requirements
+   for relevant implementations.
 \end{itemize}
 
 \subsection{Survey basics}
@@ -520,9 +513,10 @@ fiber allocation.
            information from it observation strategy (e.g. field
            definition, fiber configuration, required number of
            exposures, etc) may be updated. How often would you
-           likely want to apply such updates? Should it have to be done
-           within the same night \footnote{QA by on-site quick DR will
-       be performed during next exposure.}? Or, next nights is OK?
+           likely want to apply such updates? Next possible exposure
+           \footnote{QA by on-site quick DR will be performed during next 
+           exposure.}?
+           Between nights?
 %  \item[\colm{c}] Some survey requires software to stop exposure after certain 
 %    signal to noise ratio achieved. 
 %    If we expose the same field with the same fiber configuration
@@ -627,75 +621,147 @@ fiber allocation.
       updates are necessary to observation plans based on not only
       the outputs from on-site quick DRP but also off-site full DRP
       when available?
- \item[\coll{f}] Do you think an automatic release of status/progress
-          report per night and/or per run (c.f. Subaru observation
-          software system (SOSS) releases a PDF after each night).
 \end{enumerate}
 
-\subsection{User interface requirements}
+\subsection{User interface requirements for survey coordination}
 
-Users approach to software components to access to some data and/or
-accomplish some tasks. Once the functional requirements to the software
-components are clarified, other requirements such as what data to be
-stored and how to visualize them (i.e. user interface requirements) can
-be discussed. At this moment, we are trying to understand their
-functional requirements by having replies from the science team to the
-inquiries presented earlier in this document, so we will only present
-the titles of subsections in our mind and will compose the contents with
-a list of questions later.
+Users approach to software components in order to access to some data
+and/or accomplish some tasks. Hence requirements for user Interface
+should be about what data to be stored and how to visualize them.
+%And requiremnts on the User Interface could be divided into two: "What
+%data we need to store", and "What panel we need". At this moment,
+%system design is at conceptural level and no detailed design is planned,
+In this document, requirements to data types are mainly discussed, and
+those for visualization will be discussed in more detail elsewhere in
+future.
+
+Below, we will present a list of questions and discussion items along
+the three phases in processing a survey:
+\begin{enumerate}
+  \item[1] Preparation 
+  \item[2] Observation execution and data reduction
+  \item[3] Monitoring of survey progress
+\end{enumerate}
+So far we assume "observation execution" will be performed mainly by
+small groups of people (c.f. night operation at Subaru is carried out by
+one telescope operator, one instrument operator (usually support
+scientist), and max. 4 observers). In the other two phases, many project
+members will attend and interact remotely from various places.
 
 \subsubsection{Preparation}
 
-\subsubsection{Observation execution and data reduction}
+In this phase, given a master catalog of target objects is provided
+initially, SPT will define fields and then ETS will make fiber
+allocation employing some rules of selection and prioritization.
 
-\subsubsection{Monitoring of survey progress}
+SPT will output, at least, a list of field centers and position angles
+of defined fields, and object lists residing in each field. Currently we
+assume the object list has the same format as the master catalog, since
+a subset of the parameters therein may be used in the process of fiber
+allocation by ETS.
+
+\begin{enumerate}
+  \item[a] Would you want to receive the data output by SPT in some
+    specific format? Or, as long as a visualization tool is prepared
+    to show the defined fields etc, any format would be acceptable?
+  \item[a] Are there any other outputs expected from SPT? (e.g. a log
+    file recording some details of how fields are defined)
+  \item[b] What input to and output from ETS shall be stored?
+    \begin{itemize}
+      \item Decision tables? Results from merit function? Or any other 
+        intermediate products or decision data?
+      \item Pre-input data used within SPT? - relates what algorithm we will use.
+      \item To ETS, all output from ETS will be saved by SPT, what ETS need 
+        to output? (section before)
+    \end{itemize}
+  \item[c] How we do for history of planning?
+    \begin{enumerate}
+      \item[c1] We need at least to save snapshots?
+      \item[c2] How do we deal with version of catalog itself? Like using master 
+        object ID, among all supplied object catalogue?
+    \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Survey operation \& data reduction}
+
+Per night operation will be similar to classical typed observation (by
+means of checking possible target fields (all, next), and statistics
+from exposed frames (or on-site DRP) will be used for operation.
+
+\paragraph{For operation}
+
+\begin{enumerate}
+  \item[a] What information shall be presented to operator to understand and 
+    decide what operator need to and can do per night (or for next exposure)?
+  \item[b] How level do we need to operate survey observation automatically?
+    As for now, assuming somehow similar to classical typed observation..
+\end{enumerate}
+
+\paragraph{Recording telemetry and status}
+
+\begin{enumerate}
+  \item[a] What status and telemetry shall be transferred from ICS to SPT 
+    related with exposure.
+  \item[b] What statistics from on-site (quick) DR shall be recorded, all?
+\end{enumerate}
+
+\subsubsection{Monitoring of survey progress - ideas}
+
+This covers checking progress status per survey, per field, per object: 
+time, S/N etc. Could be one additional layer to survey archive??
+
+\begin{enumerate}
+  \item[a] What statistics need to be archived from off-site full-suite DR?
+    \begin{itemize}
+      \item per frame, per spectra, per field, per object
+      \item into FITS header of processed image or survey record database?
+    \end{itemize}
+  \item[b] STP need to keep information in hierarchical to be displayed as layered UI.
+  \item[c] How about progress history? -- we will integrate exposures per object
+  \item[d] Searchable table : this will be UI design, but capable to be searchable 
+    by many indexes??
+\end{enumerate}
 
 \subsubsection{Interface to ICS}
 
-\subsection{Survey data archive}
+Many information required by SPT will be generated by other packages, we need 
+to define what we need to keep for survey planning and tracking, and to 
+allocate these requirements to other packages. 
 
-\begin{enumerate}
- \item[\coll{a}] What kind of survey archive system do you need/want?
-          What would it need to be useful for? Could you tell us
-          your ideas, taking care of such key words as follows:
-          \begin{itemize}
-           \item Data release
-           \item Software release
-           \item Survey plan \& schedule
-           \item Survey progress \& status report
-           \item Technical reports
-             \begin{itemize}
-              \item Instrument performance
-              \item Before and after of trouble shooting,
-                maintenance work, upgrade, etc
-              \item Features in data, tips for
-                reduction \& calibration, etc
-             \end{itemize}
-           \item Public information \& outreach
-          \end{itemize}
-\end{enumerate}
+Based on design concept of "keeping all information as much as possible", 
+ICS will keep all telemetry (interval TBD) and logs (e.g. command, status), 
+to use for defect detection and instrument performance check on the 
+instrument control (e.g. performance of COBRA, A\&G/AG star).
+On interface between SPT and ICS, what is required for SPT? Such as, instrument 
+performance (e.g. fiber positioning error, A\&G/AG performance), instrument 
+error report. Of course, we could get all archived data from ICS to SPT. 
 
-Below a couple of examples from existing survey archives are presented
-as references/starting points of discussion:
+\subsection{For survey archive}
+
+Survey archive requirement and design is not well developed.
+
 \begin{itemize}
- \item SDSS Data Release website: \url{http://www.sdss.org/dr7/}
- \item A presentation file from LAM about an example of archive system
-       for an other survey: 
-% \item Visualization via kml? 
-%   (<kml xmlns="http://www.opengis.net/kml/2.2" hint="target=sky">)
+  \item SDSS DR web as a starting point for a set of requiremnt?
+  \item Automatic release of status/progress report per night or per run
+    (As Gen2 of Subaru is doing: release PDF after each night)
+  \item Visualization via kml? 
+    (<kml xmlns="http://www.opengis.net/kml/2.2" hint="target=sky">)
 \end{itemize}
 
-\subsection{Data release}
+Also, sample from LAM is attached to this document in separated. 
 
-As a background of survey archive, we need to perform continuous data
-reduction and periodic re-reduction of full data set.  Single(?) data
-reduction after each observation (single day or single run) could be
-performed on-premise (or even using on-site DR facility at Hilo supplied
-by us, although we need to care about already exposed data set...).  And
-this will not be an issue. For continuous data release like a "DR" of
-SDSS, Robert Lupton suggested to go cloud. Total "raw" data set will be
-around 0.5PB (to 1PB), and even after reduction it will be a level of
-1PB including intermediate data.  It could be possible.
+\subsection{For continuous data release}
+
+As a background of survey archive, we need to perform continuous data 
+reduction and periodic re-reduction of full data set.
+Single(?) data reduction after each observation (single day or single run) 
+could be performed on-premise (or even using on-site DR facility at Hilo 
+supplied by us, although we need to care about already exposed data set...). 
+And this will not be an issue.
+For continuous data release like a "DR" of SDSS, Robert Lupton suggested to 
+go cloud. Total "raw" data set will be around 0.5PB (to 1PB), and even after 
+reduction it will be a level of 1PB including intermediate data.
+It could be possible.
 
 \begin{itemize}
   \item Do we need such periodical data release?
@@ -730,3 +796,4 @@ PFS L2 requirements:
 \end{itemize}
 
 \end{document}
+
