@@ -4,9 +4,9 @@
 \title{Items to be discussed on science requirements on PFS software}
 \author{Atsushi Shimono + Naoyuki Tamura}
 
-\newcommand{\cols}[1]{\textcolor{red}{#1}}
-\newcommand{\colm}[1]{\textcolor{yellow}{#1}}
-\newcommand{\coll}[1]{\textcolor{blue}{#1}}
+\newcommand{\cols}[1]{\textcolor{red}{\thesubsubsection-#1}}
+\newcommand{\colm}[1]{\textcolor{yellow}{\thesubsubsection-#1}}
+\newcommand{\coll}[1]{\textcolor{blue}{\thesubsubsection-#1}}
 
 \begin{document}
 
@@ -31,6 +31,9 @@ styles of PFS surveys at the instrument builders' sides are presented,
 and in Section 3 questions and future discussion items are listed so
 that replies from the science team to them can be considered as pieces
 of the requirements to the software components.
+
+From SDSS, Michael Strauss gave us a presentation titled "SDSS survey
+design \& operation: Inputs for PFS".
 
 \section{PFS survey basics}
 
@@ -304,10 +307,9 @@ follows:
 
 {\bf Important notes:}
 \begin{itemize}
- \item Replies do NOT need to be based on solid plans. Please tell us
-       current versions of them, which should give us ideas of your
-       requirements and restrictions to the software system and should
-       be a good starting point of discussion.
+ \item Replies do NOT need to be based on solid plans of your
+   surveys. Please tell us current ideas, which should be a good
+   starting point of discussion.
  \item Honestly speaking, there may be some important questions and
        discussion items that are missed from this document, so comments
        and additions are welcome.
@@ -321,6 +323,11 @@ follows:
     \item My survey has different types of requirements such as ... 
     \item ... etc
        \end{itemize}
+ \item The questions presetend in this document are the first
+   set. Your replies to them will then allow us to send you more
+   advanced questins. There are a number of subjects which need to be
+   iteratively discussed for us to correctly understand requirements
+   for relevant implementations.
 \end{itemize}
 
 \subsection{Survey basics}
@@ -571,41 +578,47 @@ fiber allocation.
 
 \subsection{User interface requirements for survey coordination}
 
-User Interface could be defined as stored data and their
-visualization. And requiremnts on the User Interface could be divided
-into two: "What data we need to store", and "What panel we need".  At
-this moment, system design is at conceptural level and no detailed
-design is planned, discussion of user interface is just on a side of
-stored data, but not actual panel list nor its mock-ups.
+Users approach to software components in order to access to some data
+and/or accomplish some tasks. Hence requirements for user Interface
+should be about what data to be stored and how to visualize them.
+%And requiremnts on the User Interface could be divided into two: "What
+%data we need to store", and "What panel we need". At this moment,
+%system design is at conceptural level and no detailed design is planned,
+In this document, requirements to data types are mainly discussed, and
+those for visualization will be discussed in more detail elsewhere in
+future.
 
-From SDSS, Michael Strauss gave us a presentation titled "SDSS survey design 
-\& operation: Inputs for PFS". 
-
-We will have three phases for survey organization, and requirements should be 
-specified per each phase: 
+Below, we will present a list of questions and discussion items along
+the three phases in processing a survey:
 \begin{enumerate}
-  \item[1] Pure organization / coordination phase (before starting survey)
-  \item[2] Survey operation itself at the summit + pre-/post- observation works
+  \item[1] Preparation 
+  \item[2] Observation execution and data reduction
   \item[3] Monitoring of survey progress
 \end{enumerate}
-Among these three phases, "Survey operation" will be performed mainly by small 
-groups (of e.g. PDs), as currently in operation at Subaru. In the other two 
-phases (and pre-/post- observation works?), many project members will attend 
-or check.
+So far we assume "observation execution" will be performed mainly by
+small groups of people (c.f. night operation at Subaru is carried out by
+one telescope operator, one instrument operator (usually support
+scientist), and max. 4 observers). In the other two phases, many project
+members will attend and interact remotely from various places.
 
-\subsubsection{Pure organization / coordination phase (before starting survey)}
+\subsubsection{Preparation}
 
-This phase is from lists of targets to fields and exposures, 
-and some parts will be done by ETS but not by SPT (esp. per field). 
+In this phase, given a master catalog of target objects is provided
+initially, SPT will define fields and then ETS will make fiber
+allocation employing some rules of selection and prioritization.
+
+SPT will output, at least, a list of field centers and position angles
+of defined fields, and object lists residing in each field. Currently we
+assume the object list has the same format as the master catalog, since
+a subset of the parameters therein may be used in the process of fiber
+allocation by ETS.
 
 \begin{enumerate}
-  \item[a] SPT will store supplied lists of objects (catalogues), what kind 
-    of data will be supplied? 
-    \begin{itemize}
-      \item pre-defined table type? flexible xmldb type?
-      \item data will also be used for merit function and object selection 
-        (both by SPT and ETS).
-    \end{itemize}
+  \item[a] Would you want to receive the data output by SPT in some
+    specific format? Or, as long as a visualization tool is prepared
+    to show the defined fields etc, any format would be acceptable?
+  \item[a] Are there any other outputs expected from SPT? (e.g. a log
+    file recording some details of how fields are defined)
   \item[b] What input to and output from ETS shall be stored?
     \begin{itemize}
       \item Decision tables? Results from merit function? Or any other 
@@ -622,12 +635,11 @@ and some parts will be done by ETS but not by SPT (esp. per field).
     \end{enumerate}
 \end{enumerate}
 
-\subsubsection{Survey operation itself at the summit + pre-/post- observation works}
+\subsubsection{Survey operation \& data reduction}
 
-Per night operation will be similar to classical typed observation
-(by means of checking possible target fields (all, next), 
-and statistics from exposed frames (or on-site DRP) will be used for 
-operation. 
+Per night operation will be similar to classical typed observation (by
+means of checking possible target fields (all, next), and statistics
+from exposed frames (or on-site DRP) will be used for operation.
 
 \paragraph{For operation}
 
@@ -662,7 +674,6 @@ time, S/N etc. Could be one additional layer to survey archive??
   \item[d] Searchable table : this will be UI design, but capable to be searchable 
     by many indexes??
 \end{enumerate}
-
 
 \subsubsection{Interface to ICS}
 
