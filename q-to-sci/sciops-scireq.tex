@@ -22,32 +22,32 @@
 
 \section{Abstract}
 
-To start discussion of Science (L1) requirements on PFS software in 
-various aspects especially on science operation point of view, from what 
-software needs to do and what user interface is necessary, 
-this document presents a collection of ideas and understandings from 
-the instrument builders' side, and also questions and discussion items 
-are listed. 
+This document is to start discussion to collect requirements from the
+science team to the PFS software packages. Especially from the survey
+operation points of view, what each software component needs to do and
+what kind of user interfaces are necessary are expected to be
+clarified. In Section 2, current ideas and understandings of possible
+styles of PFS surveys at the instrument builders' sides are presented,
+and in Section 3 questions and future discussion items are listed so
+that replies from the science team to them can be considered as pieces
+of the requirements to the software components.
 
+\section{PFS survey basics}
 
-\section{Background}
-
-PFS software related on PFS survey are summarized in this part, with two 
-sections : "how PFS software handles PFS survey", and "what is PFS software 
-itself". 
-
-Basic nature on PFS survey could be listed as: 
+Some basic features of PFS surveys can be listed as follows:
 \begin{itemize}
-  \item PFS survey will consist of four sub-surveys, 
-    with different requirements (e.g. Table.~\ref{tab:sciops-scireq-subsvy}) 
-    on planning and data quality assuarance
-  \item Sub-surveys may share fields and/or exposure
-  \item More targets may exist than fiber \# per single field, 
-    and each field will be exposed multiple times (if specified by sub-survey?)
+ \item PFS survey will consist of four sub-surveys having different
+       features as exemplified in
+       Table.~\ref{tab:sciops-scireq-subsvy}).
+ \item Sub-surveys may share fields and/or exposures.
+ \item More targets may exist than fiber \# per field, so each field
+       may be exposed multiple times, depending on sub-surveys and
+       their goals.
+ \item Since a large number of fibers are available and the number of
+       targets is probably even larger, processes of survey planning,
+       execution, and data reduction should be automated as much as
+       possible.
 \end{itemize}
-
-Also, due to large number of targets and fibers, everything is better to be 
-made automatic as much as possible. 
 
 \begin{table}[htb]
 \caption{Requirements per sub-survey (sample; not completed)}
@@ -68,18 +68,21 @@ Calibration star number per field & ? & ? & ? & ? \\
 \end{center}
 \end{table}
 
-\subsection{How PFS survey will be executed}
+\subsection{Processing a survey}
 
-Entire PFS survey will be executed in several stages: planning, observation, 
-and data reduction. 
+\subsubsection{Planning}
 
-\subsubsection{Survey planning}
-
-Based on target lists from several surveys and their several sub-surveys, 
-fields are defined and fibers are allocated for a series of exposures 
-(e.g. Figure.~\ref{fig:sciops-scireq-slide-svyexp}). 
-
-
+Having target lists as inputs, fields of which centers correspond to
+telescope pointings are output and fibers are then allocated to targets
+in each field
+(e.g. Figure.~\ref{fig:sciops-scireq-slide-svyexp}). Multiple fiber
+allocations may be considered on a single field so that more targets can
+be observed. {\it Some rules need to be applied in defining the fields
+(i.e. field center \& position angle are chosen) and allocating fibers
+to targets, in order to maximize survey observation efficiency.}  In the
+fiber allocation, some key instrument features such as collisions of
+neighboring fiber positioners and field distortion on the PFI focal
+plane also need to be taken into account.
 
 \begin{figure}[htb]
   \begin{center}
@@ -90,108 +93,66 @@ fields are defined and fibers are allocated for a series of exposures
   \label{fig:sciops-scireq-slide-svyexp}
 \end{figure}
 
-
 \subsubsection{Observation at the summit}
 
->From instrument operation point of view, observation (series of exposures) 
-will be executed as a flow in Figure.~\ref{fig:sciops-scireq-slide-oneexp}. 
-IR detector data will be continuously read from detector during exposure 
-(up-lamp), and will be finalized to a single image per detector just after 
-end of exposure. Also CCD read out and acquisition and guidance (A\&G) 
-procedure will start just after end of exposure, in pallarel. 
-Following A\&G, fiber configuration will begin during or after A\&G completed 
-(depends on slew rate etc.), and auto guiding (AG) procedure will follow 
-after A\&G completed. 
-Once fiber configuration finished and confirmed (also for AG), next exposure 
-will start. 
-Following data readout, finalized IR image and CCD image will be transferred 
-to Hilo for on-site quick data reduction, during next exposure. 
-This data transfer is assumed not to finish before start of next exposure, 
-on-site quick data reduction will be performed during next exposure in 
-pallarel. 
-Results from on-site quick data reduction will be transferred to survey 
-planning software and also observation operators to check and consider of 
-following exposures. 
+In Figure.~\ref{fig:sciops-scireq-slide-oneexp}, the basic instrument
+operation and data flow in PFS observation is described as a
+flowchart. Once the previous exposure is completed, the telescope starts
+slewing to the next target field. Using the Acquisition \& Guide (A\&G)
+cameras, field acquisition is performed and auto guiding is then
+initiated. In parallel to these, fiber configuration is executed, and a
+new exposure is started. While CCD detectors are read out only once at
+the end of an exposure, IR detector is continuously read out during an
+exposure (so-called up-lamp) and outputs a single FITS image at the end
+making use of all the data in the intermediate readouts. The FITS data
+from the CCD and IR detectors are transferred to Hilo and on-site quick
+data reduction process is applied, during the next exposure (see the
+). Results from this on-site quick data reduction will be transferred to
+survey planning \& tracking software for records so that the operators
+at the summit can check and consider them for subsequent exposures. Some
+more details about the quick and full data reduction pipelines are given
+in \S~\ref{datareduction}.
 
 \begin{figure}[htb]
   \begin{center}
     \includegraphics[width=.75\linewidth]{sciops-scireq-slide-oneexp.png}
   \end{center}
-  \caption{Activities during observation as timeline}
+  \caption{Activities during observation along timeline}
   \label{fig:sciops-scireq-slide-oneexp}
 \end{figure}
 
-\paragraph{Updating exposure configuration to fit with condition}
-
-Actual observation PA will be defined at the Summit just before each exposure, 
-since rotation angle of PFI from the center need to be restricted within $\pm$ 
-60 degree ([TBC]) to make fiber FRD small as possible. 
-We have rotation symmetry by 60 degree on focal plane including fiber 
-positioner and A\&G camera, we can rotate PFI by 60 degree to get the same 
-exposure configuration (excluding individual difference among each fiber). 
-To adjust PA of PFI by rotating integral multiplication of 60 degree, 
-we need to update fiber configuration and object positions of A\&G and AG 
-with using final settings of PA, to meet with small shift per each fiber 
-positioner. 
-Also ETS need to consider of these possible error areas for collision 
-detection among positioners during fiber configuration trial. 
-
-
-\paragraph{QA on-site}
-
-For exposed data quality assuarance on site, 
-PFS survey requires to perform it after each exposure, 
-such as measurement of signal to noise ratios on exposed data. 
-PFS will have on-site quick data reduction pipeline as reduced features' 
-version of off-site full data reduction. 
-With on-site quick look, observation sequence will be updated within a day 
-or a run, but items to be performed by on-site quick data reduction 
-(or its volume as computing time) directly 
-connects how fast we can get evaluations for data quality, and we need to keep 
-its volume to be low as reasonable processing time. 
-
-Since this pipeline will be executed at Subaru during observation run just 
-after each exposure, trade study between processing time and required accuracy 
-could be important
-\footnote{With making computing resources larger, we might be possible shorten 
-processing time without reducing procedure in some level..}. 
-
-Current assumpsions are 
-\begin{itemize}
-  \item Host at Hilo, transfer data in parallel or right after submitted to Gen2
-    \begin{itemize}
-      \item IR (up-ramp) : just transfer finalized image not raw up-ramp, right 
-         after end of exposure and image finalization 
-      \item other : transfer data right after end of readout
-    \end{itemize}
-  \item Calibrate with pre-built data, but not with simultaneous 2D/1D 
-    calibration data (including PSF/FRD)
-  \item Process during next exposure, and return data quality metrics (well?) 
-    before beginning of next configuration
-    \begin{itemize}
-      \item How we can reduce pipelines will be a trade off between quality 
-        and time of data processing
-    \end{itemize}
-\end{itemize}
-
+%\paragraph{Updating exposure configuration to fit with condition}
+%
+%Actual observation PA will be defined at the Summit just before each
+%exposure, since rotation angle of PFI from the center need to be
+%restricted within $\pm$ 60 degree ([TBC]) to make fiber FRD small as
+%possible.  We have rotation symmetry by 60 degree on focal plane
+%including fiber positioner and A\&G camera, we can rotate PFI by 60
+%degree to get the same exposure configuration (excluding individual
+%difference among each fiber).  To adjust PA of PFI by rotating integral
+%multiplication of 60 degree, we need to update fiber configuration and
+%object positions of A\&G and AG with using final settings of PA, to meet
+%with small shift per each fiber positioner.  Also ETS need to consider
+%of these possible error areas for collision detection among positioners
+%during fiber configuration trial.
 
 \subsubsection{Data reduction}
+\label{datareduction}
 
-To perform quick data quality assuarance on site by semi-realtime, 
-PFS will have two modes of data reduction pipeline: quick-look mode on site, 
-and full mode at off site. 
-Former on-site quick-look data reduction need to be completed during 
-the next exposure of data acuisition, data reduction pipeline will be 
-simplized from full pipeline, both on pipeline and data used for reduction. 
-Latter full mode will be two, one to be used just after each night or run 
-of observation to reduce exposed data and to integrate into already executed 
-survey, and second for periodical batch analysis. But pipeline will be 
-the same for two modes (TBC). 
+PFS will have two modes of data reduction pipeline (DRP): on-site
+quick-look mode, and off-site full mode. The former, which will be
+applied to data ``on the fly'' i.e. as they come out in the middle of a
+night, will likely be a simplified version of the off-site full DRP. The
+full mode will have two functions. One is to reduce a set of data after
+each night or each run of a few to several nights to integrate them into
+those from the already executed part of the survey. The other is to
+periodically do a systematic batch analysis of all the data that have
+been already taken.
+% But pipeline will be the same for two modes (TBC).
 
-For how data will be reduced, 
-detailed (somehow) description for data reduction pipeline are described 
-in attached document from DRP team, PFS data reduction will be processed 
-roughly as follows (see also Figure.~\ref{fig:sciops-scireq-drp-slide}): 
+PFS data reduction will be processed roughly as follows (see also
+Figure.~\ref{fig:sciops-scireq-drp-slide}): 
+
 \begin{itemize}
   \item 2D extraction of fibers to 1D spectra
   \item Calibration and sky (continuum) subtraction (note: for bright sky 
@@ -200,18 +161,59 @@ roughly as follows (see also Figure.~\ref{fig:sciops-scireq-drp-slide}):
     values
 \end{itemize}
 
-Currently, several statistical requirements are already included 
-into PFS L2 requirements: 
-\begin{itemize}
-  \item REQ-SYS-679, sky subtraction to the accuracy of 0.5\% [TBC] or better 
-    of sky
-  \item REQ-SYS-896 (890), subtract diffuse background to [TBD] e- accuracy
-  \item REQ-SYS-688, flat-field systematics in fibers and detectors to 0.5\% 
-    [TBC] or better
-  \item REQ-SYS-696, wavelength to 0.01 pixel [TBC] accuracy
-  \item REQ-SYS-656, relative flax of individual object spectrum to 5\% [TBC]
-    accuracy
-\end{itemize}
+Details will be described elsewhere by the DRP development team (some
+already exist in the PDR techincal document and presentations in the PDR
+and other collaboration meetings).
+
+%Current assumpsions are 
+%\begin{itemize}
+% \item Host at Hilo, transfer data in parallel or right after submitted%
+%	to Gen2
+%       \begin{itemize}
+%	\item IR (up-ramp) : just transfer finalized image not raw
+%	      up-ramp, right after end of exposure and image
+%	      finalization
+%	\item other : transfer data right after end of readout
+%      \end{itemize}
+% \item Calibrate with pre-built data, but not with simultaneous 2D/1D 
+%       calibration data (including PSF/FRD)
+% \item Process during next exposure, and return data quality metrics (well?) 
+%       before beginning of next configuration
+% \begin{itemize}
+%  \item How we can reduce pipelines will be a trade off between quality 
+%        and time of data processing
+% \end{itemize}
+%\end{itemize}
+
+\subsubsection{Quality assurance (QA) and survey progress tracking}
+
+%PFS will have an on-site quick data reduction pipeline (DRP) as a simple
+%version of the off-site full DRP.
+So far we assume that after each single exposure, the quick DRP is
+applied and some QA process is performed, but {\it QA process has not
+been specifically defined yet.}  One example that will likely be
+implemented is the measurement of signal-to-noise ratios of spectra of
+science and calibration targets, but if others are needed, they should
+be requested, although what information can be extracted with good
+enough accuracy from a single exposure is somewhat unclear at this
+moment. Based on the results from on-site quick DRP, observation
+strategy may be updated during a run (or even during a night, if
+required), but the information that can be obtained is limited by the
+capability of quick DRP. Clearly trade studies will be needed by
+comparing required information with computational power (processing
+time). \footnote{With making computing resources larger, we might be
+possible shorten processing time without reducing procedure in some
+level..}.
+
+As survey observation progresses, more data are integrated and the
+quality of spectra is improved. The quick and full DRPs will send the
+information of the quality of existing spectra on a individal object
+basis to survey planning and tracking software (SPT). {\it Some criteria
+need to be defined judge whether or not enough data have been taken for
+single fields and/or individual objects.} Once a single object and/or
+field is considered ``done'', subsequent observation strategy
+(e.g. field definition, fiber configuration, required number of
+exposures, etc) is expected to be updated by SPT.
 
 \begin{figure}[htb]
   \begin{center}
@@ -221,37 +223,39 @@ into PFS L2 requirements:
   \label{fig:sciops-scireq-drp-slide}
 \end{figure}
 
+\subsection{PFS Software lineup}
 
-
-\subsection{PFS Software}
-
-To perform all required activities on PFS, PFS software is defined as 
-four packages and execute survey as
-Figure.~\ref{fig:sciops-scireq-slide-softcoord}: 
+To perform all required activities on PFS, PFS software is defined as
+four packages and executes a survey as
+Figure.~\ref{fig:sciops-scireq-slide-softcoord}:
 \begin{description}
-  \item[ICS] Instrument Control Software (OBCP at Subaru)
-    \begin{itemize}
-      \item Everything from observation operation (provided exposure configuration) to output raw data.
-      \item Including control software directly connected to hardware
-      \item Including software for engineering, heartbeat, etc.
-    \end{itemize}
-  \item[DRP] Data Reduction Pipeline
-    \begin{itemize}
-      \item Reducing and calibrating raw data for science
-      \item On-site quick look DRP, reduced data archive
-    \end{itemize}
-  \item[ETS] Exposure Targeting Software
-    \begin{itemize}
-      \item From possible target lists in a single field to fiber configuration for a single exposure
-      \item Handling coordinate transformation related on sky coordinate (within one field)
-    \end{itemize}
-  \item[SPT] Survey Planning and Tracking software
-    \begin{itemize}
-      \item From large survey target lists to series of exposures on multiple fields
-      \item Tracking survey progress including data QA for every exposure (by off-site full-DRP)
-    \end{itemize}
+ \item[ICS] Instrument Control Software (OBCP at Subaru)
+	    \begin{itemize}
+	     \item Everything from observation operation (provided exposure
+		   configuration) to output raw data.
+	     \item Including control software directly connected to hardware
+	     \item Including software for engineering, heartbeat, etc.
+	    \end{itemize}
+ \item[DRP] Data Reduction Pipeline
+	    \begin{itemize}
+	     \item Reducing and calibrating raw data for science
+	     \item On-site quick look DRP, reduced data archive
+	    \end{itemize}
+ \item[ETS] Exposure Targeting Software
+	    \begin{itemize}
+	     \item From possible target lists in a single field to fiber
+		   configuration for a single exposure
+	     \item Handling coordinate transformation related on sky coordinate
+		   (within one field)
+	    \end{itemize}
+ \item[SPT] Survey Planning and Tracking software
+	    \begin{itemize}
+	     \item From large survey target lists to series of exposures on
+		   multiple fields
+	     \item Tracking survey progress including data QA for every
+		   exposure (by off-site full-DRP)
+	    \end{itemize}
 \end{description}
-
 
 \begin{figure}[htb]
   \begin{center}
@@ -261,7 +265,6 @@ Figure.~\ref{fig:sciops-scireq-slide-softcoord}:
     their associated package}
   \label{fig:sciops-scireq-slide-softcoord}
 \end{figure}
-
 
 >From data point of view, each package will handle data or table as colorized 
 in Figure.~\ref{fig:sciops-scireq-slide-data}. 
@@ -281,20 +284,21 @@ attached after execution of exposure.
   \label{fig:sciops-scireq-slide-data}
 \end{figure}
 
-
-
 \section{Questions and Discussion items}
 
-This part lists discussion items listed from instrument builders' point 
-of view, and might not cover all possible discussion or requirement item. 
-Additionals are quite welcome. 
+In this section, a list of questions and discussion items to the science
+team are presented, in order to collect requirements needed to develope
+the listed software packages. Honestly speaking, there may be missing
+questions and discussion items, so comments and additionals are very
+welcome.
 
 Color of each question number indicates: 
 \begin{enumerate}
-  \item[\cols{a}] Short term questions, like a month
-  \item[\colm{b}] Short term, but assuming iteration between science and software
-  \item[\coll{c}] Mid term questions, like a half year
-  \item[d] Others
+  \item[\cols{a}] High priority. Replies are requested in a short time
+	       scale, like 1 month.
+  \item[\coll{b}] Less urgent. It would be great to have replies e.g. in
+	       6 months.
+  \item[c] Others
 \end{enumerate}
 
 \subsection{Survey definitions}
@@ -305,8 +309,8 @@ Color of each question number indicates:
 
 \subsection{Functional requirements for survey observation}
 
-This section covers what software need to perform or consider, 
-on both types of activities: 
+This section covers what software need to perform or consider, on both
+types of activities:
 \begin{itemize}
   \item while defining series of real exposures from list of science targets, 
     both survey planning activities before survey observations (or submitting 
@@ -628,6 +632,20 @@ Any requirements on calibrations?
     frame
 \end{itemize}
 
+\section*{Appendix: System-level requirements associated with data reduction}
+
+Currently, several statistical requirements are already included into
+PFS L2 requirements:
+\begin{itemize}
+  \item REQ-SYS-679, sky subtraction to the accuracy of 0.5\% [TBC] or better 
+    of sky
+  \item REQ-SYS-896 (890), subtract diffuse background to [TBD] e- accuracy
+  \item REQ-SYS-688, flat-field systematics in fibers and detectors to 0.5\% 
+    [TBC] or better
+  \item REQ-SYS-696, wavelength to 0.01 pixel [TBC] accuracy
+  \item REQ-SYS-656, relative flax of individual object spectrum to 5\% [TBC]
+    accuracy
+\end{itemize}
 
 \end{document}
 
