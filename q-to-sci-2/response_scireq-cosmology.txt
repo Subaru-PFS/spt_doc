@@ -1,0 +1,205 @@
+
+*******
+S4.1 Survey Basics
+Q.1.0-a: Complete Table 1by checking the numbers that already exist,
+and giving typical numbers to the slots currently occupied by
+“?”. If ANY corrections and/or additions are necessary, please send
+them to us.
+	- Individual exposure time: 
+	A: 7.5min
+	- Total exposure time per object: 
+	A: 15min
+	- Science target density: 
+	A: ~2/arcmin^2 (~7100/deg^2), estimated based on the COSMOS mock catalog
+	- Number of sky fibers: 
+	A: ~240 (~10%) fibers, available for sky (TBD) (For comparison, SDSS/BOSS is using about 80 sky fibers over 7 sq. degs. FoV, about 8% of the fibers)
+	- Distribution of sky fibers over field: 
+	A: random (for fibers which can’t find any target in the patrol region)
+	- Number of calibration stars over field: 
+	A: TBD
+	- Distribution of calibration stars over field: 
+	A: TBD
+
+	Note: The target number density needs to be further checked with real data (HSC, Subaru, FMOS, Keck….)
+
+S4.2	Survey Preparation
+S4.2.1 Target list
+
+Q.2.1-a: How would you prepare master catalog(s)? Please include some explanations of your ideas about the key issues as listed below:
+	- Original data or catalog(s) based on which master catalog(s) for PFS survey are created: 
+	A: Object catalogs constructed based on grizy data of HSC-Wide 
+	- Types of objects to be included. Presumably all potential targets not only for science but also for calibration, field acquisition, and auto guiding (i.e. stars) are included? 
+	A: Target galaxies, stars, …. the details are TBD
+	- Catalog format (number of columns, parameters to be listed, etc) : 
+	A: Object flag, ids, RA, dec, magnitudes (each band), expected S/N(?), but the details are TBD
+	- Astrometry (reference star catalog, etc) : 
+	A: Each field of HSC-W has a calibrated astronomy information with the errors. 
+	- Version control of catalog : 
+	A: We should have such a control system such that we can keep track how the targets in each exposure are selected  (the details are TBD). The versions of image or master catalog used for target selection should be stored somewhere, e.g., in the target catalog of each exposure. 
+
+4.2.2 Field definition
+
+Q.2.2-a: How do you want to determine field centers and position angles of the fields? Are there any possible optimization processes in your mind? 
+
+A: Possible examples may be: The center of each target field should be
+defined by the tiles of HSC-Wide survey.  However, the HSC and PFS
+FoVs are not exactly the same (HSC about 1.8 sq. degrees, and PFS is
+about 1.1 sq. degrees). Hence, a tiling strategy for the PFS survey
+has to be carefully studied. The HSC survey will be done, or at least
+most of the data will be taken before the start of the PFS
+survey. Hence, given the HSC object catalog, we need to study the best
+strategy, based on a simulation of tiling and survey efficiency.  We
+believe someone has to work on a survey simulation, which probably
+requires about 1 FTE for one postdoc-level researcher, as we did for
+the preparation study of HSC survey, which was led by A. Nishizawa,
+N. Yasuda and M. Takada.
+
+Q.2.2-b: Do you need to visit individual fields multiple times? If yes: 
+
+A: Yes, we are planning to have 2 visits at least. Also we should have
+rather a large dither between the 2 exposures for each field, probably
+offset by a half of the FoV or so. Hence, we should have the record
+telling us how many visits each portion of the field were taken. We
+should keep these information in the log files (the number of visits,
+the position angles, and the field center).
+
+Q.2.2-c: Do you need to have an overlap between neighboring fields? If yes, how would you want to define such an overlap? 
+
+A: Yes. For the two visits with large dithering offsets, we should
+keep the record of the overlapping regions. The overlapping regions
+can be used to calibrate the effect of fiber collision/target
+selection (e.g. some of target galaxies may be missed due to the fiber
+collision).
+
+4.2.3 Fiber allocation
+Q.2.3-a: Based on what kind of criteria/rules/procedures would you like to select science targets to which fibers are allocated? Some possible examples are: 
+
+A: Primarily based on the HSC photometry. For example, according to
+our feasibility study based on the COSMOS catalog, we have found that
+the selection of 22.8<g<24.2 AND -0.1<g-r<0.3 AND NOT(g>23.6 AND
+r-i>0.3) can select target emission-line galaxies with a reasonable
+success rate. We may further include color criteria for target
+selection/priotirization.  We will soon have real HSC data, and also
+John Silverman and his collaborators are running [OII] emitters survey
+for COSMOS region with FMOS. These pilot data/study will be used to
+further improve the algorithm of target selection.
+
+
+Q.2.3-b: If you need to visit single field multiple times, how would
+you want to split objects into subsets for the multiple visits and
+determine fiber allocations?
+
+A: This depends on how our observation nights are allocated. If gray
+and dark nights are allocated for us, we should split our targets into
+“bright” and “faint” samples in order to maximize the success rate
+(here “success” means redshift measurement with an enough
+signal-to-noise ratio). A possible example is given in Section 2 of
+Takada et al. (2014). Again a further refinement of target selection
+for each exposure will be carefully designed, based on the pilot
+study/data.
+
+Q.2.3-c: How do you want to split fibers into the targets for your survey and those for other PFS sub-surveys, if required? 
+
+A: This is TBD. We need further discussion among different working
+groups. For instance, if PFS cosmology survey needs to be accommodated
+with PFS QSO survey, we need to find a best strategy for splitting
+fibers into cosmology targets and QSO targets in order to maximize the
+scientific returns.
+
+Q.2.3-d: What type of objects (stars) would you select as calibration stars? How many of them will be enough for your goals of calibration (See Table. 1), accounting for e.g. possibility of cross-check? Any specific requirements to their spatial distribution in the field? 
+
+A: Reasonably bright stars, over a range of red and NIR wavelengths,
+will be very useful to calibrate spectrophotometry compared to the HSC
+photometry. The spectra of galaxy spectra can be used, but [OII]
+emitters for cosmology survey would be too faint to have their
+continuum detected, so those can be used only in a statistical
+sense. Hence, bright stars for the calibration would be needed, but we
+are not sure how many such bright stars are needed.
+
+Q.2.3-e: How would you define “blank” sky areas for sky fibers? Do you think you can define “blank” sky areas just based on the information in your master catalog(s)? 
+
+A: We believe that the HSC catalog or images are enough for defining
+“blank” sky area, because the HSC-Wide is much deeper than typical
+target galaxies of the PFS cosmology survey.
+
+Q.2.3-f: How do you want to spatially distribute the sky fibers in one field? 
+
+A: This is TBD. As for our current default plan, we want to use
+fibers, which can’t find any target galaxies in their patrol regions,
+for sky fibers. Then the distribution of fibers will be very likely to
+be random on the sky.
+
+4.3 Observation execution
+Q.3.0-a: Will you possibly want to visit a certain field multiple times in different nights/runs/seasons when it is technically feasible? Or a certain field need to be visited within a single night/run/season when it is technically feasible?  
+
+A: Not sure yet. As described above, depending on the night
+allocation, a survey optimization will be different. If we need to use
+both gray and dark nights for cosmology survey, one visit out of 2
+visits required for each field can be done in gray night, and then the
+other visit can be done in dark night, in order to maximize the
+success rate. Hence, this depends on the operation and night
+allocation policies of PFS cosmology survey, together with the PFS
+galaxy and GA surveys.
+
+Q.3.0.-b: As mentioned in the other parts of this document, we expect some QA process is performed and based on the information from it observation strategy (e.g. field definition, fiber configuration, required number of exposures, etc) may be updated. How often would you likely want to apply such updates? Should it have to be done within the same night? Or, next nights is OK? 
+
+A: Not yet known. Given the great success of BOSS BAO survey, we
+should look into how they are doing for QA. (TBD)
+
+4.4 Data reduction
+Q.4.0-a: After a fully reduced and calibrated 1D spectrum is extracted, what do you want to measure using the spectral features? 
+
+A: Redshift for cosmology. Also the estimated signal-to-noise ratio for [OII] line or other lines we want to measure. 
+
+Q.4.0-b: Could you briefly explain how you will measure them? For example:
+	- Measure a redshift (or radial velocity) by fitting a gaussian to an emission/absorption line (more than one lines are fitted simultaneously if available) 
+
+A: Measure redshift by fitting the measured spectra to a model of
+[OII] doublets. (An exact procedure is TBD)
+
+4.4.1 Data QA and feedback to SPT
+Q.4.1-a: While you are integrating certain objects, to monitor the quality of your spectra, what kind of quantities and/or diagnostics would you need to see? Earlier in this document, S/N (of continuum and/or emission line which may depend on the survey objectives) is presented as an example (c.f. integrated S/N at SDSS). Is this appropriate, and how do you define S/N (e.g. continuum and/or emission/absorption line at certain wavelength)? Are there any others in addition to S/N? Some examples may be:
+	- Record flux level and noise level separately.
+	- Record fiber positioning errors (residual distances from the target positions).
+	
+A: We think that the integrated S/N for some bright object
+(calibration object) can be used for QA, e.g. by comparing the
+spectrophotometry flux with the HSC photometry. Then, also we need to
+measure both the flux and sky level for each fiber position. With
+these information we need to monitor the quality of data at each
+position. The fiber positioning errors would also be useful, because
+the errors affect the selection function of [OII] emitters. These need
+to be all recorded. The details are TBD.
+
+Q.4.1-b: Data quality also strongly depends on sky conditions and instrument status at individual exposures. What information would you specifically want to be recorded? 
+
+A: The details are TBD. We believe we need to measure the 2D PSF at
+each position in the focal plane, and then need to use OH lines to
+measure the sky level as a function of wavelengths and positions,
+taking into account the PSF variations. These information need to be
+recorded. Details are TBD
+
+Q.4.1-c: In what criteria should each object be judged “done” (i.e. no more integration is needed)? 
+
+A: If the expected depth is reached and the desired target acquisition
+is done, the field is essentially done.
+
+Q.4.1-d: In what criteria should each field or each fiber configuration be judged “done” (i.e. no more visit is needed to this field/configuration)? 
+
+A: If two visits for each field are taken for the expected
+configuration capability and if the target acquisition is done, the
+field is claimed to be done. (TBD)
+
+Q.4.1-e: The estimation of e.g. S/N by quick DRP is perhaps less accurate than full DRP, so more objects may be judged “done” after applying full DRP. Conversely, detailed reduction by full DRP may reveal some erroneous features in the data that are not detected by quick DRP and some objects may need to be “undone”. So is it correct that you would like to see if updates are necessary to observation plans based on not only the outputs from on-site quick DRP but also off-site full DRP when available? 
+
+A: Yes, the quick DRP is desired to have in order for us to monitor the
+ongoing observation of the field (for making sure whether the
+observation is properly on-going on time). Then, the full DRP is also
+needed. If something wrong is found, we will probably need to come
+back to the field, with such a possible failure flag. We can again
+very much follow BOSS operation strategy for these quick DRP and full
+DRP assessments.
+
+Q.4.1-f: Do you think an automatic release of status/progress report per night and/or per run (c.f. Subaru observation software system (SOSS) releases a PDF after each night). 
+
+A: Yes, this sounds reasonable.

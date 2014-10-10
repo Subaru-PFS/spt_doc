@@ -1,0 +1,1348 @@
+\documentclass[a4paper,notitlepage]{article}
+\usepackage{ssn-format}
+\drafttrue
+\title{Items to be discussed on science requirements on PFS software}
+\author{PFS}
+\setcounter{tocdepth}{2}
+\usepackage{sciops-scireq}
+\begin{document}
+
+\SSNID{00003}
+\SSNREV{002}
+\SSNCATEGORY{ALL}
+\SSNChangeRecord{Rev.001 / First Release / 2013--11--16}
+\SSNReference{(none)}
+\SSNAttachment{(none)}
+\SSNWritten{PFS}
+
+\ssnhead
+
+\section{Answers from Science Wokring Groups on 1st set}
+
+This section will be organized as following per each question circulated 
+at 1st round. 
+\begin{enumerate}
+  \item "Question" itself
+  \item Summary (or composited) answer : omitted, if only one or two answers
+  \item Original answer from cosmology WG
+  \item Original answer from GA WG
+  \item Original answer from Galaxy + AGN
+\end{enumerate}
+
+\renewcommand{\thesubsection}{Q.1.0-\alph{subsection}}
+\setcounter{subsection}{0}
+%\subsection{Q.1.0-a (Survey basics)}
+\subsection{Survey basics}
+
+\subsubsection{Question}
+
+Complete Table 1 by checking the numbers that already exist,
+and giving typical numbers to the slots currently occupied by
+``?''. If ANY corrections and/or additions are necessary, please send
+them to us.
+
+\subsubsection{Summary table}
+
+Updated as Table.~\ref{tab:sciops-scireq-subsvy}.
+
+\begin{table}[htb]
+\begin{minipage}{\textwidth}
+\renewcommand{\footnoterule}{}
+\caption{Requirements per sub-survey}
+\label{tab:sciops-scireq-subsvy}
+\begin{center}
+\begin{tabular}{c|c|c|c|c}
+conditions & cosmology & GA-LR & GA-MR & galaxy-AGN \\ \hline
+\hline
+Individual exposure time (min) & 7.5 & 
+  30\footnotemark[1], 15\footnotemark[2] & 
+  30\footnotemark[3], 15\footnotemark[4] & 
+  15 or 30 \footnotemark[5] \\
+\hline
+Total integration time per object (min) & 15 & 
+  120\footnotemark[6], 300\footnotemark[7]  &
+  120\footnotemark[8], 45\footnotemark[9]  &
+  60 -- 360 \footnotemark[10] \\
+\hline
+Science target density (\#/sq arcmin) & 
+  \textasciitilde 2 \footnotemark[11] & 
+  2k/field \footnotemark[12] & 
+  1k\footnotemark[13], 2k\footnotemark[14] / field & 
+  15k, 29k / field \footnotemark[15] \\
+\hline
+Number of sky fibers per field & \textasciitilde 240 (\textasciitilde 10\%) 
+  \footnotemark[16] & 150 & 150 & (\textasciitilde 400) \footnotemark[17] \\
+\hline
+Distribution of sky fibers over field & random 
+  \footnotemark[18] & random & random & Uniform \\
+\hline
+Number of calibration stars per field & TBD & --- \footnotemark[19] & --- & 
+  $>20$ \footnotemark[20] \\
+\hline
+Distribution of calibration stars over field & TBD & --- & --- & nature \\
+\end{tabular}
+\renewcommand{\thempfootnote}{\arabic{mpfootnote}}
+\footnotetext[1]{Dark, Gray}
+\footnotetext[2]{Bright}
+\footnotetext[3]{Dark, Gray}
+\footnotetext[4]{Bright}
+\footnotetext[5]{Since we would request to visit our QSO/AGN targets twice in
+  the cosmology component.}
+\footnotetext[6]{MWdisk/stream}
+\footnotetext[7]{M31, dIrr}
+\footnotetext[8]{MWdSph/halo}
+\footnotetext[9]{MWthick}
+\footnotetext[10]{The total integration times range from 1hr to 6hrs (or 
+  perhaps more, for a very small subset).}
+\footnotetext[11]{\textasciitilde 7100 per sq. deg. 
+  Estimated based on the COSMOS mock catalog}
+\footnotetext[12]{MWdisk/stream, M31}
+\footnotetext[13]{MWhalo}
+\footnotetext[14]{MWthick/dSph}
+\footnotetext[15]{15000 per field (Wider), 29000 per field (Deeper). \\
+  Roughly speaking, we plan to target 75% of these, which requires 
+  roughly 5 visits over the wider and 10 visits over the deeper fields. \\
+  The primary targets range in redshift between z~0.7 and z~7.  There will 
+  be low-redshift objects as well (including stars) that we will need the 
+  software to recognize.}
+\footnotetext[16]{For comparison, SDSS/BOSS is using about 80 sky fibers over 7 
+    sq. degs. FoV, about 8\% of the fibers}
+\footnotetext[17]{We have been assuming 2000 science fibers 
+  in our estimates.  However, ideally we would like to calculate our 
+  optimal targeting efficiency over 5 or 10 visits, with the remaining 
+  fibers being allocated to sky.}
+\footnotetext[18]{for fibers which can't find any target in the patrol region}
+\footnotetext[19]{Calibration stars are not required for GA-LR, GA-MR}
+\footnotetext[20]{According to Jim-Sensei, there are 
+  \textasciitilde 30 suitable calibration stars per pointing, of which we perhaps 
+  want to have at least 20 (to ensure we get a few good ones).}
+\end{center}
+\end{minipage}
+\end{table}
+
+\subsubsection{A. Cosmology}
+
+\begin{description}
+    \item[Individual exposure time] 7.5min
+    \item[Total exposure time per object] 15min
+    \item[Science target density] 
+      \textasciitilde 2/arcmin${}^2$ (\textasciitilde 7100/deg${}^2$), 
+      estimated based on the COSMOS mock catalog
+    \item[Number of sky fibers]
+      \textasciitilde 240 (\textasciitilde 10\%) fibers, 
+      available for sky (TBD) 
+      (For comparison, SDSS/BOSS is using about 80 sky fibers over 7 sq. degs. 
+      FoV, about 8% of the fibers)
+    \item[Distribution of sky fibers over field] 
+      random (for fibers which can't find any target in the patrol region)
+    \item[Number of calibration stars over field]
+      TBD
+    \item[Distribution of calibration stars over field]
+      TBD
+\end{description}
+
+Note: The target number density needs to be further checked with real data 
+(HSC, Subaru, FMOS, Keck....)
+
+\subsubsection{A. GA}
+
+\begin{table}[htb]
+\begin{center}
+\caption{Answers from GA WG on survey parameters}
+\label{tab:sciops-scireq-sub-ga}
+\begin{tabular}{c|c|c}
+Conditions                             & GA-LR                   &   GA-MR+LR
+\\ \hline
+Individual exposure time               & 30 min for Dark/Grey    &   30 min for Dark/Grey  \\
+                                       & 15 min for Bright       &   15 min for Bright  \\
+Total integration time per object      & 120 min (MWdisk/stream) &   120 min (MWdSph/halo)   \\
+                                       & 300 min (M31,dIrr)      &   45 min (MWthick)   \\
+Science target density (\#/arcmin)     & 2K (MWdisk/stream,M31)  &   1K (MWhalo) - 2K (MWthick/dSph)  \\
+Number of sky fibers per field         & \multicolumn{2}{c}{150}   \\ 
+Distribution of sky fibers over field  & \multicolumn{2}{c}{randomly distributed}  \\
+Number of calibration stars per field  & \multicolumn{2}{c}{calibration stars are not required}  \\
+\end{tabular}
+\end{center}
+\end{table}
+
+\subsubsection{A. Galaxy + AGN}
+
+We plan a two-tiered survey, with a wider (25 deg${}^2$) and 
+deeper (10 deg${}^2$) component
+
+\begin{description}
+
+\item[Exposure times]
+
+We would ask to change the "total integration time per object"
+of the cosmology component from "15 min" to "15 or 30 min",
+since we would request to visit our QSO/AGN targets twice in
+the cosmology component.
+
+\item[Science target density (\#/PFS pointing)]
+
+Wider - 15,000 sources per PFS pointing
+
+Deeper - 29,000 sources per PFS pointing
+
+Roughly speaking, we plan to target 75\% of these, which requires 
+roughly 5 visits over the wider and 10 visits over the deeper fields.
+
+The primary targets range in redshift between z~0.7 and z~7.  There will 
+be low-redshift objects as well (including stars) that we will need the 
+software to recognize. 
+
+The total integration times range from 1hr to 6hrs (or 
+perhaps more, for a very small subset).
+
+\item[Number of sky fibers]
+
+We have been assuming 2000 science fibers 
+in our estimates.  However, ideally we would like to calculate our 
+optimal targeting efficiency over 5 or 10 visits, with the remaining 
+fibers being allocated to sky.
+
+\item[Distribution of sky fibers] Uniform.
+
+\item[Number of calibration stars]
+According to Jim-Sensei, there are 
+~30 suitable calibration stars per pointing, of which we perhaps 
+want to have at least 20 (to ensure we get a few good ones).
+
+\item[Distribution of calibration stars]
+As given by nature.
+
+\end{description}
+
+
+
+\renewcommand{\thesubsection}{Q.2.1-\alph{subsection}}
+\setcounter{subsection}{0}
+%\subsection{Q.2.1-a (Survey preparation - target list)}
+\subsection{Survey preparation - target list}
+
+\subsubsection{Question}
+
+How would you prepare master catalog(s)?  Please
+          include some explanations of your ideas about the key
+          issues as listed below:
+\begin{itemize}
+    \item Original data or catalog(s) based on which master
+             catalog(s) for PFS survey are created
+    \item Types of objects to be included. Presumably all
+             potential targets not only for science but also for
+             calibration, field acquisition, and auto guiding
+             (i.e. stars) are included?
+    \item Catalog format (number of columns, parameters to be
+             listed, etc)
+    \item Astrometry (reference star catalog, etc)
+    \item Version control of catalog
+\end{itemize}
+
+
+\subsubsection{Summary}
+
+{\bf Astrometry} per survey or per catalog differ among them. Instrument 
+operation assumes to use the same astrometry (or coordinate system) from 
+one catalog to make object acquisition and guidance error as small as 
+possible
+\footnote{To make astrometry differece between target objects and acquisition 
+star, it is ideal to use the same astrometry mapping}. 
+For combined catalog, such as combind catalog from HSC and NIR 
+imaging survey, astrometry of output catalog will be carefully evaluated 
+during combining process. We need to study 
+\begin{itemize}
+  \item Error budget allocation on source catalog error, on instrument operational point of view
+  \item Possible error (or positional accuracy) of each catalog or during combining
+\end{itemize}
+
+{\bf Catalog format} supplied from surveys and stored into survey database 
+and exposed FITS images need to be investigated further, such as
+\begin{itemize}
+  \item Study existing survey catalogues : SDSS, HSC, PANSTARRS
+  \item Study existing survey FITS data : FMOS as sample
+\end{itemize}
+
+\subsubsection{A. Cosmology}
+
+\begin{description}
+    \item[catalog] Object catalogs constructed based on grizy data of HSC-Wide 
+    \item[types of objects] Target galaxies, stars, .... the details are TBD
+    \item[catalog format] Object flag, ids, RA, dec, magnitudes (each band), expected S/N(?), but the details are TBD
+    \item[astrometry] Each field of HSC-W has a calibrated astronomy information with the errors. 
+    \item[version control] We should have such a control system such that we 
+      can keep track how the targets in each exposure are selected  (the details are TBD). The versions of image or master catalog used for target selection should be stored somewhere, e.g., in the target catalog of each exposure. 
+\end{description}
+
+\subsubsection{A. GA}
+
+\begin{description}
+    \item[catalog]
+ We will use the SDSS imaging data, supplemented with PANSTARRS
+(we need to check the footprints), for field star photometry and
+coordinates. We will use HSC narrow-band imaging (filter NB515) for
+M31 and the dwarf galaxies (for isolation of giant stars).
+
+ Summary:\\
+---------------------------------------------------------------------------\\
+ MW disk/stream :SDSS, PANSTARRS\\
+ MW halo        :SDSS, PANSTARRS, Subaru/HSC (SSP, wide-field survey data)\\
+ M31 halo       :Subaru/HSC (intensive program, submitted)\\
+ MW dSphs       :Subaru/Suprime Cam + HSC (normal program, to be submitted)\\
+---------------------------------------------------------------------------
+    \item[types of objects]
+Target stars; field acquisition and guide stars will be brighter stars
+from same photometry source as targets.
+    \item[catalog format]
+Columns of ID, coordinates and photometry in various bandpasses
+    \item[astrometry]
+The SDSS has proven positional accuracy for use in MOS. 
+    \item[version control]
+??
+\end{description}
+
+\subsubsection{A. Galaxy + AGN}
+Our source catalogs will be based on HSC+NIR catalogs. These catalogs 
+should be in hand and finalized by the start of the PFS survey. 
+The astrometry, etc, will be uniform for the matched catalogs.
+
+Quasars will be selected based on the HSC photometric
+colors, time-variability info, and external multi-wave info 
+(including VIKING, UKIDSS, AKARI, WISE, FIRST, XMM, ...). The 
+coordinate info of the targets will be based on the HSC astrometry 
+results. Note that most of our targets are point sources.
+
+\renewcommand{\thesubsection}{Q.2.2-\alph{subsection}}
+\setcounter{subsection}{0}
+%\subsection{Q.2.2-a (Field definition)}
+\subsection{Field definition}
+
+\subsubsection{Question}
+How do you want to determine field centers and position
+          angles of the fields? Are there any possible optimization
+          processes in your mind? Possible examples may be:
+          \begin{itemize}
+           \item Maximizing the accessibility to high-priority
+             science targets
+           \item Maximizing the number of stars that can be imaged
+             by the A\&G cameras for field acquisition and auto
+             guiding.
+           \item Uniformizing the number of science targets per
+             field.
+           \item Pre-defined over entire survey area. 
+          \end{itemize}
+          
+\subsubsection{Summary}
+
+{\bf Pre-defined over entire survey area} on field center and PA by each survey 
+working group seems to be the way to go. 
+Targetting software (ETS) could have a functionality to make object assignment 
+efficiency better by applying a small change on field center (but not PA?) like 
+within one Cobra patrol area. 
+
+On dithering field centers by one Cobra pointing between integrations suggested 
+by galaxy working group, we need to study further with instrument design and 
+limitations in consideration, such like 
+\begin{itemize}
+  \item A set of fibers nearby the field center will be mapped on outer area of detectors
+  \item PA on integration will be changed by integral multiplication of 60 degree
+\end{itemize}
+
+\subsubsection{A. Cosmology}
+
+Possible examples may be: The center of each target field should be
+defined by the tiles of HSC-Wide survey.  However, the HSC and PFS
+FoVs are not exactly the same (HSC about 1.8 sq. degrees, and PFS is
+about 1.1 sq. degrees). Hence, a tiling strategy for the PFS survey
+has to be carefully studied. The HSC survey will be done, or at least
+most of the data will be taken before the start of the PFS
+survey. Hence, given the HSC object catalog, we need to study the best
+strategy, based on a simulation of tiling and survey efficiency.  We
+believe someone has to work on a survey simulation, which probably
+requires about 1 FTE for one postdoc-level researcher, as we did for
+the preparation study of HSC survey, which was led by A. Nishizawa,
+N. Yasuda and M. Takada.
+
+
+\subsubsection{A. GA}
+We will pre-define field centers and position angles.
+
+\subsubsection{A. Galaxy + AGN}
+
+To zeroth order, we envision setting the targeting for all ten visits in 
+advance, to maximize the total number of observable sources, given 
+the target densities listed above.  To first order, the list of targets 
+may change in real time based on quick-look redshifts, as described 
+below (Q3.0-b).
+
+We will plan to dither field centers by one cobra pointing between 
+integrations, to ensure that targets fall on different parts of 
+the detector and thus mitigate against various systematics.
+
+
+%\subsection{Q.2.2-b (no of visits)}
+\subsection{no of visits}
+\subsubsection{Question}
+Do you need to visit individual fields multiple times?
+          If yes:
+          \begin{itemize}
+           \item How would you define the number of visits? 
+             (e.g. pre-defined number at most, balancing over entire survey 
+             area, certain fraction at least) 
+           \item Would you keep the field center and position angle
+             for all the visits?
+          \end{itemize}
+
+\subsubsection{Summary}
+
+Every surveys are planning to visit multiple times on fields, also some with 
+dither (cosmology by a half of the FoV, galaxy by small dither). 
+AGN survey will be combined with cosmology and galaxy but will have different 
+total exposure time (number of visits). 
+This {\bf Q.2.2-b} was actually following {\bf Q.2.2-a} to build requirements 
+on (semi-)automatical object-field-fiber assignment by software, but it seems 
+we would start from smaller requirement like having pre-defined field centers. 
+From answers, minimum requirements would be: 
+\begin{itemize}
+  \item Provide database system to store and track exposures per object
+  \item Provide execution of complexed query on exposed data parameters per 
+    object, invoked followed by data release
+\end{itemize}
+
+\subsubsection{A. Cosmology}
+
+Yes, we are planning to have 2 visits at least. Also we should have
+rather a large dither between the 2 exposures for each field, probably
+offset by a half of the FoV or so. Hence, we should have the record
+telling us how many visits each portion of the field were taken. We
+should keep these information in the log files (the number of visits,
+the position angles, and the field center).
+
+\subsubsection{A. GA}
+1. We wish to repeat of order 10\% of the fields for statistical
+analysis of the variable/binary fraction. The repeats should be
+revisited on timescales of days, weeks, month and years.
+
+2. Yes
+
+\subsubsection{A. Galaxy + AGN}
+
+In the Galaxy/AGN fields, we will be visiting fields 5-10 times.  We
+will only need small (8") dithers about the nominal center.  This
+should mean that our main algorithms for assigning fibers can be done
+per field with effectively a single center.  We will likely be revisiting a 
+small number of targets after a time delay (e.g., the AGN).
+
+In the cosmology survey, we want to revisit all AGN candidates for 
+both 2 visits, for a total of 30 min integrations. In the galaxy 
+survey, we will likely want 1-3 hr integrations, depending on the 
+magnitude. If it is possible to arrange, we may want to accumulate 
+these with a time separation between individual 20 min exposures, 
+to examine variability issues.  We will have to examine the feasibility 
+and scientific return of multiple exposures, but would like to keep 
+this option open for now.
+
+Note: 
+SPT = "SURVEY PLANNING AND TRACKING" (SOFTWARE). ETS = "EXPOSURE TARGETING SOFTWARE".  DRP = DATA REDUCTION PIPELINE
+
+We need "SPT" and "ETS", which can prepare multiple visits for one 
+field (possibly different PA and slightly different FoV center) 
+with handling
+1) some objects need to be observed only one time and should not
+be observed in the following visits,
+2) some objects need to be observed multiple times and once they
+are allocated in one visit, they need to be allocated in the 
+following visits until they are observed with required times,
+3) some objects need to be observed multiple times but if they
+cannot be observed required number of times in the planned
+multiple visits, they should not be allocated (or allocated lower
+priority than 2).
+In addition, we need "DRP" which can combine spectra from multiple
+visits only for objects which are observed multiple times.
+
+
+%\subsection{Q.2.2-c (Overlap)}
+\subsection{Overlap}
+\subsubsection{Question}
+Do you need to have an overlap between neighboring fields? If yes, how would you want to define such an overlap? 
+
+\subsubsection{Summary}
+
+Cosmology survey will have large overlap between neighboring fields, but field 
+center will be pre-defined. 
+
+As the same as {\bf Q.2.2-a}, all survey will not need automatical field center 
+definition by software with supplied algorithm or criteria. 
+
+
+\subsubsection{A. Cosmology}
+
+Yes. For the two visits with large dithering offsets, we should
+keep the record of the overlapping regions. The overlapping regions
+can be used to calibrate the effect of fiber collision/target
+selection (e.g. some of target galaxies may be missed due to the fiber
+collision).
+
+\subsubsection{A. GA}
+No, since will repeat field centers as above. 
+
+\subsubsection{A. Galaxy + AGN}
+No more than may result from the dithers discussed above.
+
+
+\renewcommand{\thesubsection}{Q.2.3-\alph{subsection}}
+\setcounter{subsection}{0}
+%\subsection{Q.2.3-a (Fiber allocation criteria/rules/procedures)}
+\subsection{Fiber allocation criteria/rules/procedures}
+
+\subsubsection{Question}
+Based on what kind of criteria/rules/procedures would
+           you like to select science targets to which fibers are
+           allocated? Some possible examples are:
+           \begin{itemize}
+        \item A merit function that is defined by or calculated from 
+              a subset of
+              parameters in the master catalog.
+        \item Priority that is given in advance to individual
+              objects or categories of them in the master
+              catalog.
+           \end{itemize}
+
+\subsubsection{Summary}
+
+A combination of {\bf merit function} and {\bf prioritized list} is 
+required. {\bf Prioritized list} will be used to emphasize subsets of rare 
+targets, taking before applying {\bf merit function} based selection or some 
+bonous point based implementation could be possible. 
+
+Functional requirement on cosmology is not clear and need to be further 
+studied, but such combination could satisfy target selection and fiber 
+assignment strategy. 
+
+\subsubsection{A. Cosmology}
+Primarily based on the HSC photometry. For example, according to
+our feasibility study based on the COSMOS catalog, we have found that
+the selection of 22.8<g<24.2 AND -0.1<g-r<0.3 AND NOT(g>23.6 AND
+r-i>0.3) can select target emission-line galaxies with a reasonable
+success rate. We may further include color criteria for target
+selection/priotirization.  We will soon have real HSC data, and also
+John Silverman and his collaborators are running [OII] emitters survey
+for COSMOS region with FMOS. These pilot data/study will be used to
+further improve the algorithm of target selection.
+
+\subsubsection{A. GA}
+We will use a combination of both merit function (calculated on
+photometry) and a pre-assigned priority. The merit function will be
+used for the field stars (e.g. to de-emphasize M-stars) and for the
+M31 stars and dwarf galaxies (to emphasize stars most likely to be
+members based on the narrow-band filter NB515). Priority based on
+coordinates will be used to emphasize subsets of stars that meet the merit
+criterion based on photometry. 
+
+\subsubsection{A. Galaxy + AGN}
+
+Our goal in allocating fibers will simply be to maximize the total 
+number of sources in the field over the 5-10 visits.  Because of 
+the differing exposure times for different classes of object, different 
+fibers will be assigned variable total numbers of objects.
+
+There are some special sub-classes of targets (LAEs, AGNs) that should
+be given higher weight since they are rare.
+
+
+%\subsection{Q.2.3-b (multiple time visit management)}
+\subsection{multiple time visit management}
+
+\subsubsection{Question}
+If you need to visit single field multiple times, how
+           would you want to split objects into subsets for the
+           multiple visits and determine fiber allocations?
+
+\subsubsection{Summary}
+
+(no summary as for now)
+
+\subsubsection{A. Cosmology}
+This depends on how our observation nights are allocated. If gray
+and dark nights are allocated for us, we should split our targets into
+“bright” and “faint” samples in order to maximize the success rate
+(here “success” means redshift measurement with an enough
+signal-to-noise ratio). A possible example is given in Section 2 of
+Takada et al. (2014). Again a further refinement of target selection
+for each exposure will be carefully designed, based on the pilot
+study/data.
+
+\subsubsection{A. GA}
+
+\subsubsection{A. Galaxy + AGN}
+
+
+%\subsection{Q.2.3-c (Integrate from sub-survey)}
+\subsection{Integrate from sub-survey}
+
+\subsubsection{Question}
+How do you want to split fibers into the targets for
+           your survey and those for other PFS sub-surveys, if
+           required?
+
+\subsubsection{Summary}
+
+(no summary as for now)
+
+\subsubsection{A. Cosmology}
+This is TBD. We need further discussion among different working
+groups. For instance, if PFS cosmology survey needs to be accommodated
+with PFS QSO survey, we need to find a best strategy for splitting
+fibers into cosmology targets and QSO targets in order to maximize the
+scientific returns.
+
+\subsubsection{A. GA}
+
+\subsubsection{A. Galaxy + AGN}
+
+
+%\subsection{Q.2.3-d (Calibration stars)}
+\subsection{Calibration stars}
+
+\subsubsection{Question}
+What type of objects (stars) would you select as
+           calibration stars? How many of them will be enough for
+           your goals of calibration (See
+           Table.1), accounting for
+           e.g. possibility of cross-check? Any specific
+           requirements to their spatial distribution in the field?
+           \footnote{PFS software will also query catalog(s) of stars 
+           supplied by survey operators, 
+           independently from sub-survey catalog(s).} 
+
+\subsubsection{Summary}
+
+On GA, "the equatorial calibration fields" seems not objects combined into 
+each exposure but individual exposures on specified fields. 
+Answers are summarized as Table.~\ref{tab:sciops-scireq-calibstar}.
+
+\begin{table}[htb]
+\begin{center}
+\caption{Calibration stars}
+\label{tab:sciops-scireq-calibstar}
+\begin{tabular}{c|c|c}
+  & Selection & \# per field \\
+\hline
+Cosmology & bright star over red and NIR &  \\
+Galaxy    & F sub-dwarf star & 20-30 per field \\
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\subsubsection{A. Cosmology}
+
+ Reasonably bright stars, over a range of red and NIR wavelengths,
+will be very useful to calibrate spectrophotometry compared to the HSC
+photometry. The spectra of galaxy spectra can be used, but [OII]
+emitters for cosmology survey would be too faint to have their
+continuum detected, so those can be used only in a statistical
+sense. Hence, bright stars for the calibration would be needed, but we
+are not sure how many such bright stars are needed.
+
+\subsubsection{A. GA}
+We will observe the equatorial calibration fields established by
+the on-going Gaia-ESO spectroscopic survey of field stars in the Milky
+Way.
+
+\subsubsection{A. Galaxy + AGN}
+
+We will use F sub-dwarfs as in SDSS with the goal of 20-30 
+per field.
+
+%\subsection{Q.2.3-e (Blank sky)}
+\subsection{Blank sky}
+
+\subsubsection{Question}
+How would you define ``blank'' sky areas for sky
+           fibers? Do you think you can define ``blank'' sky areas
+           just based on the information in your master catalog(s)?
+
+\subsubsection{Summary}
+
+Every survey area has imaging survey data, so ``blank'' sky fiber is possible 
+to be defined and checked with "TBD magnitude" on imaging data. 
+This means ETS need to have access on such imaging data and to check assigned 
+fiber is really blank. 
+
+\subsubsection{A. Cosmology}
+We believe that the HSC catalog or images are enough for defining
+``blank'' sky area, because the HSC-Wide is much deeper than typical
+target galaxies of the PFS cosmology survey.
+
+\subsubsection{A. GA}
+"blank" sky means no object at that position down to TBD magnitude,
+and no extended source (galaxy) less than TBD away, in master
+catalogue (i.e. SDSS etc).
+ 
+
+\subsubsection{A. Galaxy + AGN}
+"Blank" fibers will be those to which we could not efficiently assign
+a target.  We would like the targeting software to use HSC imaging to
+identify blank regions of sky from which we can choose the sky fibers.
+Ultimately, we will have to take some data to know exactly how many
+sky fibers are needed to accurately model the sky.
+
+
+%\subsection{Q.2.3-f (Sky distribution)}
+\subsection{Sky distribution}
+
+\subsubsection{Question}
+How do you want to spatially distribute the sky fibers in one field? 
+
+\subsubsection{Summary}
+
+Sky fibers' distribution will be random or uniform as answered. 
+
+Several methods could be possible on this "random" or "uniform": 
+just leave fibers which cannot find any target as suggested by cosmology, 
+selecting fibers spatially random from low score on merit function, 
+or 
+pre-defined uniformly distributed fibers. 
+
+\subsubsection{A. Cosmology}
+
+This is TBD. As for our current default plan, we want to use
+fibers, which can't find any target galaxies in their patrol regions,
+for sky fibers. Then the distribution of fibers will be very likely to
+be random on the sky.
+
+
+\subsubsection{A. GA}
+Randomly.
+
+\subsubsection{A. Galaxy + AGN}
+
+Roughly speaking, the sky fibers should be uniformly distributed. 
+
+\renewcommand{\thesubsection}{Q.3.0-\alph{subsection}}
+\setcounter{subsection}{0}
+%\subsection{Q.3.0-a (Obs execution - multiple visit)}
+\subsection{Obs execution - multiple visit}
+
+\subsubsection{Question}
+Will you possibly want to visit a certain field
+           multiple times in different nights/runs/seasons when it
+           is technically feasible?
+           Or a certain field need to be visited within a single 
+           night/run/season when it is technically feasible? 
+           \footnote{Depending on when you
+           observe a given area of sky, the positions of target
+           objects on the focal plane slightly change due to
+           e.g. differential atmospheric refraction, so fiber
+           positions need to be adjusted accordingly. The operation
+           of the rotator will also be different again depending on
+           observing time, due to the $+/-60^{\circ}$ limitation
+           (for the sake of minimizing Focal Ratio Degradation (FRD)
+           variation, exploiting the hexagonal symmetry of the focal
+           plane).}
+
+\subsubsection{Summary}
+
+Not a requirement level, but demands exist on coordinating visits on a certain 
+field over certain solid timescales (GA, Quasar). 
+On the other hand, galaxy survey want to complete one field within a single run. 
+
+Similar to on-going HSC SSP survey, this also could be organized by hand in 
+the same layor as "defining field center and PA" before using survey software. 
+
+
+\subsubsection{A. Cosmology}
+Not sure yet. As described above, depending on the night
+allocation, a survey optimization will be different. If we need to use
+both gray and dark nights for cosmology survey, one visit out of 2
+visits required for each field can be done in gray night, and then the
+other visit can be done in dark night, in order to maximize the
+success rate. Hence, this depends on the operation and night
+allocation policies of PFS cosmology survey, together with the PFS
+galaxy and GA surveys.
+
+\subsubsection{A. GA}
+As noted above, we wish to repeat TBD field centers on day, week,
+month, year timescales.  Since our science targets -- stars in the
+Milky Way and Local Group galaxies -- are not distributed
+isotropically we have very specific field centers that are accessible
+only during specific seasons.
+
+\subsubsection{A. Galaxy + AGN}
+
+In general, we do not have strong cadence requirements, because of our 
+multiple visits.  We likely want to complete 6 hours of observation 
+on a given field within a single run to complete the faintest targets 
+if possible.
+
+If there are no major demerits from the multiple visits with long 
+time intervals, for example, in a time scale of several months to 
+years, we would like to observe quasar targets (but not necessarily 
+for all targets) in different seasons. Such observations will help 
+to discover rare transient phenomena (such as type1-type2 transitions 
+of AGNs), which will bring the first statistics for those phenomena. 
+Again we note that this will not be a primary science driver.
+
+
+%\subsection{Q.3.0-b (onsite QA)}
+\subsection{onsite QA}
+
+\subsubsection{Question}
+As mentioned in the other parts of this document, we
+           expect some QA process is performed and based on the
+           information from it observation strategy (e.g. field
+           definition, fiber configuration, required number of
+           exposures, etc) may be updated. How often would you
+           likely want to apply such updates? Should it have to be done
+           within the same night \footnote{QA by on-site quick DR will
+       be performed during next exposure.}? Or, next nights is OK?
+
+\subsubsection{Summary}
+
+(This question need to be further discussed with {\bf Q.4.1}.)
+
+
+\subsubsection{A. Cosmology}
+Not yet known. Given the great success of BOSS BAO survey, we
+should look into how they are doing for QA. (TBD)
+
+
+\subsubsection{A. GA}
+The next night is fine. 
+
+\subsubsection{A. Galaxy + AGN}
+Here we provide some details on the type of QA we would like. 
+We would like a system similar to the SDSS model:
+
+-- After each 20min exp, we would like to evaluate the average 
+quality of the spectra *as a function of fiber magnitude*.  We would like the 
+QA software to return a S/N at each magnitude. If above the minimum 
+acceptable, we can use the exposure.  Otherwise not.
+
+-- Since we have such a wide array of redshifts and magnitudes, we may 
+also want to tune the band where the S/N is evaluated (e.g., blue arm for 
+the LAEs, but NIR arm for the z~1 survey, etc).
+
+-- Our most demanding and complicated request of the QA software 
+is that we would like to evaluate redshifts in real time.  Specifically, 
+we expect some contamination to our samples from very faint, blue 
+low-z galaxies.  These low-z galaxies will have strong emission lines 
+in general, so that a redshift determination after a single 20min 
+exposure will likely be possible.  We would like the software to 
+evaluate a crude (emission-line) redshift after each exposure.  If 
+the object is at z<0.5, then we will have a second target to replace 
+it within the same cobra region.
+
+
+
+\renewcommand{\thesubsection}{Q.4.0-\alph{subsection}}
+\setcounter{subsection}{0}
+%\subsection{Q.4.0-a (Spectral feature detection)}
+\subsection{Spectral feature detection}
+
+\subsubsection{Question}
+After a fully reduced and calibrated 1D spectrum is extracted,
+      what do you want to measure using the spectral features?
+
+\subsubsection{Summary}
+
+Although question was not specific (both Q.4.0-a and Q.4.0-b), combining replies 
+also with {\bf Q.4.0-c}, possible option is to have 
+\begin{itemize}
+  \item Template based feature (emission, absorption) detection and measurement tool
+  \item Additional special recipes from GA and galaxy survey
+\end{itemize}
+
+\subsubsection{A. Cosmology}
+Redshift for cosmology. Also the estimated signal-to-noise ratio for [OII] line or other lines we want to measure. 
+
+\subsubsection{A. GA}
+We wish to measure line-of-sight velocity (`redshift'), and stellar
+parameters (metallicity, gravity, effective temperature).
+
+\subsubsection{A. Galaxy + AGN}
+We are interested in measuring the SED of each object, and all measurements 
+that arise from that, including redshift, stellar population properties, 
+emission-line widths and ratios, stellar velocity dispersions in bright 
+systems, continuum flux, broad spectral features (e.g., FeII emission in quasars). 
+We need real spectrophotometry both for redshifts and for all science 
+applications.
+
+
+%\subsection{Q.4.0-b (Spectral feature measurement)}
+\subsection{Spectral feature measurement}
+
+\subsubsection{Question}
+Could you briefly explain how you will measure them?
+      For example:
+      \begin{itemize}
+       \item Measure a redshift (or radial velocity) by fitting a
+         gaussian to an emission/absorption line (more than one
+         lines are fitted simultaneously if available).
+      \end{itemize}
+
+\subsubsection{Summary}
+
+(See {\bf Q.4.0-a}.)
+
+\subsubsection{A. Cosmology}
+Measure redshift by fitting the measured spectra to a model of
+[OII] doublets. (An exact procedure is TBD)
+
+\subsubsection{A. GA}
+We will use established pipelines for the reduction and analysis of
+stellar spectra e.g. the SDSS SSP. 
+
+\subsubsection{A. Galaxy + AGN}
+
+We are currently developing multiple redshift codes.  We will be relying on 
+both continuum/absorption line information and emission line information.
+We will be interested in stacking spectra, in forward modeling 
+to extract the most from the low S/N spectra we expect, etc.
+
+%\subsection{Q.4.0-c (Special recipes)}
+\subsection{Special recipes}
+
+\subsubsection{Question}
+Do you think there are any special recipes of data reduction 
+      and calibration that are needed to the data for your
+      (sub-)surveys but are not needed for other surveys?
+      Do you think there are any special from 
+      current assumed ``normal'' recipes or procedures shown in an 
+      attached slide on DRP?  
+
+\subsubsection{Summary}
+
+(See {\bf Q.4.0-a}.)
+
+\subsubsection{A. Cosmology}
+
+\subsubsection{A. GA}
+We most definitely require special data reduction and calibration. 
+
+\subsubsection{A. Galaxy + AGN}
+In the case of quasars (almost point sources even under the Subaru 
+seeing), SDSS-like spectrophotometry would be useful for AGN time 
+variability studies because we can see quantitatively accurate 
+spectral difference both for AGN continuum and emission lines. 
+Accurate wavelength calibration in short optical 
+wavelengths where strong airglow lines are not available in the 
+object spectra is also required.
+
+
+%\subsection{Q.4.0-d (Additional data)}
+\subsection{Additional data}
+
+\subsubsection{Question}
+The data reduction and calibration follow many steps, so a
+      number of intermediate data will be formed. Are there anything
+      specific among them you will likely need/want to access to?
+      (e.g. un-wavelength calibrated spectra, spectra without sky subtraction) 
+
+\subsubsection{Summary}
+
+We need to keep products and also subproducts during 2D pipeline from each 
+exposure, such as 
+\begin{itemize}
+  \item un-wavelength-calibrated spectra
+  \item pre-sky-subtraction spectra
+\end{itemize}
+
+\subsubsection{A. Cosmology}
+
+\subsubsection{A. GA}
+Definitely want both the un-wavelength-calibrated spectra and
+pre-sky-subtraction spectra. 
+
+\subsubsection{A. Galaxy + AGN}
+As mentioned above, probably we need flux-calibrated spectra for 
+each individual exposure for time-domain studies.
+
+
+\renewcommand{\thesubsection}{Q.4.1-\alph{subsection}}
+\setcounter{subsection}{0}
+%\subsection{Q.4.1-a (output from QA)}
+\subsection{output from QA}
+
+\subsubsection{Question}
+While you are integrating certain objects, to monitor the
+      quality of your spectra, what kind of quantities and/or
+      diagnostics would you need to see? Earlier in this document,
+      S/N (of continuum and/or emission line which may depend on the
+      survey objectives) is presented as an example (c.f. integrated
+      S/N at SDSS). Is this appropriate, and how do you define S/N 
+      (e.g. continuum and/or emission/absorption line at certain wavelength)? 
+      Are there any others in
+      addition to S/N? Some examples may be:
+      \begin{itemize}
+       \item Record flux level and noise level separately.
+       \item Record fiber positioning errors (residual distances
+         from the target positions).
+      \end{itemize}
+
+\subsubsection{Summary}
+
+Possible items are followings, we need to check S/N on specified way by 
+category of object. Also, combination with exposure configuration could 
+be important (also {\bf Q.4.1-b} need to be considered). 
+
+\begin{itemize}
+  \item Integrated S/N for bright (calibration) objects (cosmology), compare with HSC photometry
+  \item S/N at specific wavelengths (GA), with minumum requirement
+  \item S/N for LAE and drop-outs, continuum S/N for z=1-2 sample (galaxy)
+\end{itemize}
+
+\subsubsection{A. Cosmology}
+We think that the integrated S/N for some bright object
+(calibration object) can be used for QA, e.g. by comparing the
+spectrophotometry flux with the HSC photometry. Then, also we need to
+measure both the flux and sky level for each fiber position. With
+these information we need to monitor the quality of data at each
+position. The fiber positioning errors would also be useful, because
+the errors affect the selection function of [OII] emitters. These need
+to be all recorded. The details are TBD.
+
+\subsubsection{A. GA}
+We will set a minimum required S/N at specific wavelengths (all
+TBD). We do wish both flux level and noise level separately, and
+positioning errors recorded.
+
+\subsubsection{A. Galaxy + AGN}
+We might be interested in evaluating S/N on the line for the LAEs and
+drop-outs in the sample.  For the redshift 1-2 sample, we will want a
+continuum S/N evaluation.  We will also want benchmark measurements 
+of the quality of sky subtraction, and measurements of the brightness 
+of the sky (both in strong lines and continuum in the red, and in continuum 
+in the blue).
+
+
+
+%\subsection{Q.4.1-b (observation environment)}
+\subsection{observation environment}
+
+\subsubsection{Question}
+Data quality also strongly depends on sky conditions and
+      instrument status at individual exposures. What information
+      would you specifically want to be recorded?
+
+\subsubsection{Summary}
+
+(Items to be measured need to be studied further.)
+
+\subsubsection{A. Cosmology}
+The details are TBD. We believe we need to measure the 2D PSF at
+each position in the focal plane, and then need to use OH lines to
+measure the sky level as a function of wavelengths and positions,
+taking into account the PSF variations. These information need to be
+recorded. Details are TBD
+
+\subsubsection{A. GA}
+Both sky conditions and the seeing. Status of fibers (e.g. poor
+transmission of specific ones, broken ones). 
+
+\subsubsection{A. Galaxy + AGN}
+
+
+%\subsection{Q.4.1-c (criteria of QA for each object)}
+\subsection{criteria of QA for each object}
+
+\subsubsection{Question}
+In what criteria should each object be judged ``done''
+      (i.e. no more integration is needed)?
+
+\subsubsection{Summary}
+
+Combining both {\bf Q.4.1-c} and {\bf Q.4.1-d}, per individual object would 
+not be required. 
+Per field basis criteria will be applied, such as 
+80\% of high priority targets for GA and S/N criteria on combined in magnitude 
+bins for galaxy 
+(method and criteria TBD for cosmology). 
+
+\subsubsection{A. Cosmology}
+If the expected depth is reached and the desired target acquisition
+is done, the field is essentially done.
+
+
+\subsubsection{A. GA}
+Has met required S/N criteria. 
+
+\subsubsection{A. Galaxy + AGN}
+Considering the intrinsic differences on an object-by-object basis, we
+do not wish to evaluate completion separately for each object, but
+rather based on some kind of average S/N criterion.  As mentioned above, this 
+should be based on average behavior in fiber magnitude bins, since depending 
+on conditions (seeing, clouds, etc) we may not achieve our target 
+S/N in a given total exposure time.
+
+
+
+%\subsection{Q.4.1-d (criteria of QA for field)}
+\subsection{criteria of QA for field}
+
+\subsubsection{Question}
+In what criteria should each field or each fiber configuration
+      be judged ``done'' (i.e. no more visit is needed to this
+      field/configuration)?
+
+\subsubsection{Summary}
+
+(Refer {\bf Q.4.1-d}.)
+
+\subsubsection{A. Cosmology}
+If two visits for each field are taken for the expected
+configuration capability and if the target acquisition is done, the
+field is claimed to be done. (TBD)
+
+
+\subsubsection{A. GA}
+
+80\% of high-priority targets have met required S/N criteria.  But
+note the requirements for repeat visits to a given field centre
+(around 10\%) noted above. Each visit must meet this 80\% level.
+
+\subsubsection{A. Galaxy + AGN}
+At the point when we can no longer efficiently allocate fibers then
+there is no point in continuing to revisit a field and we should
+declare it done.  We need to do some targetting simulations 
+to determine that threshold.
+
+
+%\subsection{Q.4.1-e (Feedback from full DRP)}
+\subsection{Feedback from full DRP}
+
+\subsubsection{Question}
+The estimation of e.g. S/N by quick DRP is perhaps less
+      accurate than full DRP, so more objects may be judged ``done''
+      after applying full DRP. Conversely, detailed reduction by
+      full DRP may reveal some erroneous features in the data that
+      are not detected by quick DRP and some objects may need to be
+      ``undone''. So is it correct that you would like to see if
+      updates are necessary to observation plans based on not only
+      the outputs from on-site quick DRP but also off-site full DRP
+      when available?
+
+\subsubsection{Summary}
+
+Applying update with results from full DRP is necessary, however 
+in most cases update by full DRP will be improvement but not degrade, 
+or we need to be conservative on defining on-site (quick) DRP pipeline. 
+
+Also we need to study BOSS operation strategy as suggested. 
+
+\subsubsection{A. Cosmology}
+Yes, the quick DRP is desired to have in order for us to monitor the
+ongoing observation of the field (for making sure whether the
+observation is properly on-going on time). Then, the full DRP is also
+needed. If something wrong is found, we will probably need to come
+back to the field, with such a possible failure flag. We can again
+very much follow BOSS operation strategy for these quick DRP and full
+DRP assessments.
+
+
+\subsubsection{A. GA}
+Yes, decisions on whether or not `done' should be made based on
+full DRP.
+
+\subsubsection{A. Galaxy + AGN}
+In the early stages, of course, we will want to test the QA software 
+using the full reductions.  However, in general, we hope that the 
+S/N estimates will only *improve* following full reductions, so that 
+the QA estimates should be a conservative guess as to whether 
+the data quality are sufficient.  We might more aggressively revisit our 
+rare sub-groups (quasars and LAEs).  Throughout the survey we will want 
+the full reductions to report summary statistics, describing the quality of 
+each observation.
+
+
+%\subsection{Q.4.1-f (status/progress report)}
+\subsection{status/progress report}
+
+\subsubsection{Question}
+Do you think an automatic release of status/progress
+          report per night and/or per run (c.f. Subaru observation
+          software system (SOSS) releases a PDF after each night).
+
+\subsubsection{Summary}
+
+Per night regular on-site status report is reasonable option. 
+This report should include 
+\begin{itemize}
+  \item progress and status of exposures (including output from on-site DRP)
+  \item weather information
+\end{itemize}
+
+Also we would be better to study what subaru is generating as night report. 
+
+\subsubsection{A. Cosmology}
+Yes, this sounds reasonable.
+
+
+
+\subsubsection{A. GA}
+Per night. 
+
+\subsubsection{A. Galaxy + AGN}
+
+Yes, regular status reports will be very important for 
+ongoing planning. The report should include also weather 
+information, not only the data acquisition status and the data 
+quality.
+
+
+
+\renewcommand{\thesubsection}{Q.6.0-\alph{subsection}}
+\setcounter{subsection}{0}
+%\subsection{Q.6.0-a (survey archive)}
+\subsection{survey archive}
+
+\subsubsection{Question}
+What kind of survey archive system do you need/want?
+          What would it need to be useful for? Could you tell us
+          your ideas, taking care of such key words as follows:
+          \begin{itemize}
+           \item Data release
+           \item Software release
+           \item Survey plan \& schedule
+           \item Survey progress \& status report
+           \item Technical reports
+             \begin{itemize}
+              \item Instrument performance
+              \item Before and after of trouble shooting,
+                maintenance work, upgrade, etc
+              \item Features in data, tips for
+                reduction \& calibration, etc
+             \end{itemize}
+           \item Public information \& outreach
+          \end{itemize}
+
+\subsubsection{Summary}
+
+(We need to revisit this question with further development on our software 
+design.) 
+
+\subsubsection{A. Cosmology}
+
+\subsubsection{A. GA}
+All of the above 'key words'!. SDSS sets a very high standard to
+which we can aspire.
+
+\subsubsection{A. Galaxy + AGN}
+This is a very broad question. We certainly want regular data releases, 
+and a plan to do so.
+
+One obvious early benchmark for us will be the two-pointing 
+magnitude-limited sample that we would like to do in the first 
+season.  These data will be used not only for early science 
+papers, but also to fine-tune our selection criteria for the main 
+survey.  Here we would want access to the data very rapidly for 
+planning purposes.
+
+Later data releases will be based on more sophisticated/improved 
+data reduction software, and such continuous improvements are useful.
+
+
+
+\renewcommand{\thesubsection}{Q.7.0-\alph{subsection}}
+\setcounter{subsection}{0}
+%\subsection{Q.7.0-a (Periodical DR)}
+\subsection{Periodical DR}
+
+\subsubsection{Question}
+As a background of survey archive, we need to perform continuous data
+reduction and periodic re-reduction of full data set.  Single(?) data
+reduction after each observation (single day or single run) could be
+performed on-premise (or even using on-site DR facility at Hilo supplied
+by us, although we need to care about already exposed data set...).  And
+this will not be an issue. For continuous data release like a "DR" of
+SDSS, Robert Lupton suggested to go cloud. Total "raw" data set will be
+around 0.5PB (to 1PB), and even after reduction it will be a level of
+1PB including intermediate data.  It could be possible.
+
+Do we need such periodical data release?
+
+\subsubsection{Summary}
+
+(no summary as for now)
+
+\subsubsection{A. Cosmology}
+
+\subsubsection{A. GA}
+Yes. 
+
+\subsubsection{A. Galaxy + AGN}
+
+
+
+%\subsection{Q.7.0-b (Changes b/w DRs)}
+\subsection{Changes b/w DRs}
+
+\subsubsection{Question}
+What do we change on each data release --- pipeline upgrade?
+
+\subsubsection{Summary}
+
+(no summary as for now)
+
+\subsubsection{A. Cosmology}
+
+\subsubsection{A. GA}
+
+\subsubsection{A. Galaxy + AGN}
+
+
+\renewcommand{\thesubsection}{Q.8.0-\alph{subsection}}
+\setcounter{subsection}{0}
+%\subsection{Q.8.0-a (Statistics of calibration)}
+\subsection{Statistics of calibration}
+
+\subsubsection{Question}
+Other requirements for DR outputs: 
+
+Statistics of calibration? --- to check stability in short and long term
+
+\subsubsection{Summary}
+
+(no summary as for now)
+
+\subsubsection{A. Cosmology}
+
+\subsubsection{A. GA}
+
+\subsubsection{A. Galaxy + AGN}
+
+
+
+
+%\subsection{Q.8.0-b (Xcheck calibration)}
+\subsection{Xcheck calibration}
+
+\subsubsection{Question}
+Other requirements for DR outputs: 
+
+Cross-check by calibrating calibration object by themselves within a frame
+
+\subsubsection{Summary}
+
+(no summary as for now)
+
+\subsubsection{A. Cosmology}
+
+\subsubsection{A. GA}
+
+\subsubsection{A. Galaxy + AGN}
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+

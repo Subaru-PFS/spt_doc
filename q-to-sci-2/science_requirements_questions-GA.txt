@@ -1,0 +1,312 @@
+
+4.1 Survey basics
+
+Q. 1.0-a Complete Table 1 by checking the numbers that already exist,
+and giving typical numbers to the slots currently occupied by "?".
+If ANY corrections and/or additions are necessary, please send them to us.
+
+A. Revised Table 1 for GA
+
+----------------------------------------------------------------------------------------------
+Conditions                              GA-LR                     GA-MR+LR
+----------------------------------------------------------------------------------------------
+Individual exposure time                30 min for Dark/Grey      30 min for Dark/Grey
+                                        15 min for Bright         15 min for Bright
+
+Total integration time per object       120 min (MWdisk/stream)   120 min (MWdSph/halo)
+                                        300 min (M31,dIrr)        45 min (MWthick)
+
+Science target density (#/arcmin)       2K (MWdisk/stream,M31)    1K (MWhalo) - 2K (MWthick/dSph)
+Number of sky fibers per field          150
+Distribution of sky fibers over field   randomly distributed
+Number of calibration stars per field   calibration stars are not required
+----------------------------------------------------------------------------------------------
+
+
+4.2 Survey preparation
+
+Q. 2.1-a How would you prepare master catalog(s)? Please include some
+explanations of your ideas about the key issues as listed below:
+
+- Original data or catalog(s) based on which master catalog(s) for PFS
+  survey are created
+
+A. We will use the SDSS imaging data, supplemented with PANSTARRS
+(we need to check the footprints), for field star photometry and
+coordinates. We will use HSC narrow-band imaging (filter NB515) for
+M31 and the dwarf galaxies (for isolation of giant stars).
+
+ Summary:
+---------------------------------------------------------------------------
+ MW disk/stream :SDSS, PANSTARRS
+ MW halo        :SDSS, PANSTARRS, Subaru/HSC (SSP, wide-field survey data)
+ M31 halo       :Subaru/HSC (intensive program, submitted)
+ MW dSphs       :Subaru/Suprime Cam + HSC (normal program, to be submitted)
+---------------------------------------------------------------------------
+
+- Types of objects to be included. Presumably all potential targets
+  not only for science but also for calibration, field
+  acquisition, and auto guiding (i.e. stars) are included?
+
+A. Target stars; field acquisition and guide stars will be brighter stars
+from same photometry source as targets.
+
+- Catalog format (number of columns, parameters to be listed, etc)
+
+A. Columns of ID, coordinates and photometry in various bandpasses
+
+- Astrometry (reference star catalog, etc)
+
+A. The SDSS has proven positional accuracy for use in MOS. 
+
+- Version control of catalog
+
+A. ??
+
+Q. 2.2-a How do you want to determine field centers and position
+angles of the fields? Are there any possible optimization processes in
+your mind? Possible examples may be:
+
+- Maximizing the accessibility to high-priority science targets
+
+- Maximizing the number of stars that can be imaged by the A&G cameras
+  for field acquisition and auto guiding.
+
+- Uniformizing the number of science targets per field.
+
+- Pre-defined over entire survey area.
+
+A. We will pre-define field centers and position angles.
+
+Q. 2.2-b Do you need to visit individual fields multiple times? If yes:
+
+ - How would you define the number of visits? (e.g. pre-defined number
+    at most, balancing over entire survey area, certain fraction at
+    least)
+
+A. We wish to repeat of order 10% of the fields for statistical
+analysis of the variable/binary fraction. The repeats should be
+revisited on timescales of days, weeks, month and years.
+
+
+ - Would you keep the field center and position angle for all the visits?
+
+A. Yes
+
+Q. 2.2-c Do you need to have an overlap between neighboring fields? If
+yes, how would you want to define such an overlap?
+
+A. No, since will repeat field centers as above. 
+
+
+Q. 2.3-a Based on what kind of criteria/rules/procedures would you
+like to select science targets to which fibers are allocated? Some
+possible examples are:
+
+ - A merit function that is defined by or calculated from a subset of
+   parameters in the master catalog.
+
+ - Priority that is given in advance to individual objects or
+    categories of them in the master catalog
+
+A. We will use a combination of both merit function (calculated on
+photometry) and a pre-assigned priority. The merit function will be
+used for the field stars (e.g. to de-emphasize M-stars) and for the
+M31 stars and dwarf galaxies (to emphasize stars most likely to be
+members based on the narrow-band filter NB515). Priority based on
+coordinates will be used to emphasize subsets of stars that meet the merit
+criterion based on photometry. 
+
+Q. 2.3-d What type of objects (stars) would you select as calibration
+stars? How many of them will be enough for your goals of calibration
+(See Table. 1), accounting for e.g. possibility of cross-check? Any
+specific requirements to their spatial distribution in the field?
+
+A. We will observe the equatorial calibration fields established by
+the on-going Gaia-ESO spectroscopic survey of field stars in the Milky
+Way.
+ 
+Q. 2.3-e How would you define "blank" sky areas for sky fibers? Do you
+think you can define "blank" sky areas just based on the information
+in your master catalog(s)?
+
+A. "blank" sky means no object at that position down to TBD magnitude,
+and no extended source (galaxy) less than TBD away, in master
+catalogue (i.e. SDSS etc).
+ 
+Q. 2.3-f How do you want to spatially distribute the sky fibers in one
+field?
+
+A. Randomly.
+
+4.3 Observation execution
+
+Q. 3.0-a Will you possibly want to visit a certain field multiple
+times in different nights/runs/seasons when it is technically
+feasible? Or a certain field need to be visited within a single
+night/run/season when it is technically feasible? 
+
+A. As noted above, we wish to repeat TBD field centers on day, week,
+month, year timescales.  Since our science targets -- stars in the
+Milky Way and Local Group galaxies -- are not distributed
+isotropically we have very specific field centers that are accessible
+only during specific seasons.
+
+Q. 3.0-b As mentioned in the other parts of this document, we expect
+some QA process is performed and based on the information from it
+observation strategy (e.g. field definition, fiber configuration,
+required number of exposures, etc) may be updated. How often would you
+likely want to apply such updates? Should it have to be done within
+the same night 5? Or, next nights is OK?
+
+A. The next night is fine. 
+
+4.4 Data reduction
+
+Q. 4.0-a After a fully reduced and calibrated 1D spectrum is
+extracted, what do you want to measure using the spectral features?
+
+A. We wish to measure line-of-sight velocity (`redshift'), and stellar
+parameters (metallicity, gravity, effective temperature).
+ 
+Q. 4.0-b Could you briefly explain how you will measure them? For example:
+
+ - Measure a redshift (or radial velocity) by fitting a gaussian to an
+   emission/absorption line (more than one lines are fitted
+   simultaneously if available).
+
+A. We will use established pipelines for the reduction and analysis of
+stellar spectra e.g. the SDSS SSP. 
+
+The next two are 'blue' questions but we answer them anyway..
+
+Q. 4.0-c Do you think there are any special recipes of data reduction
+and calibration that are needed to the data for your (sub-)surveys but
+are not needed for other surveys? Do you think there are any special
+from current assumed 'normal' recipes or procedures shown in an
+attached slide on DRP?
+
+A. We most definitely require special data reduction and calibration. 
+
+Q. 4.0-d The data reduction and calibration follow many steps, so a
+number of intermediate data will be formed. Are there anything
+specific among them you will likely need/want to access to?
+(e.g. un-wavelength calibrated spectra, spectra without sky subtraction)
+
+A. Definitely want both the un-wavelength-calibrated spectra and
+pre-sky-subtraction spectra. 
+
+
+4.4.1 Data QA and feedback to SPT
+
+
+Q. 4.1-a While you are integrating certain objects, to monitor the
+quality of your spectra, what kind of quantities and/or diagnostics
+would you need to see? Earlier in this document, S/N (of continuum
+and/or emission line which may depend on the survey objectives) is
+presented as an example (c.f. integrated S/N at SDSS). Is this
+appropriate, and how do you define S/N (e.g. continuum and/or
+emission/absorption line at certain wavelength)? Are there any others
+in addition to S/N? Some examples may be:
+
+ - Record flux level and noise level separately.
+
+ - Record fiber positioning errors (residual distances from the target
+   positions).
+
+A. We will set a minimum required S/N at specific wavelengths (all
+TBD). We do wish both flux level and noise level separately, and
+positioning errors recorded.
+ 
+Another blue question next:
+
+Q. 4.1-b Data quality also strongly depends on sky conditions and
+instrument status at individual exposures. What information would you
+specifically want to be recorded? 
+
+A. Both sky conditions and the seeing. Status of fibers (e.g. poor
+transmission of specific ones, broken ones). 
+
+Q. 4.1-c In what criteria should each object be judged `done' (i.e. no
+more integration is needed)?
+
+A. Has met required S/N criteria. 
+
+Q. 4.1-d In what criteria should each field or each fiber
+configuration be judged `done' (i.e. no more visit is needed to this
+field/configuration)?
+
+A. 80% of high-priority targets have met required S/N criteria.  But
+note the requirements for repeat visits to a given field centre
+(around 10%) noted above. Each visit must meet this 80% level.
+
+Q. 4.1-e The estimation of e.g. S/N by quick DRP is perhaps less
+accurate than full DRP, so more objects may be judged `done' after
+applying full DRP. Conversely, detailed reduction by full DRP may
+reveal some erroneous features in the data that are not detected by
+quick DRP and some objects may need to be `undone'. So is it correct
+that you would like to see if updates are necessary to observation
+plans based on not only the outputs from on-site quick DRP but also
+off-site full DRP when available?
+
+A. Yes, decisions on whether or not `done' should be made based on
+full DRP.
+
+
+Q. 4.1-f Do you think an automatic release of status/progress report
+per night and/or per run (c.f. Subaru observation software system
+(SOSS) releases a PDF after each night).
+
+A. Per night. 
+
+Q. 6.0-a What kind of survey archive system do you need/want? What
+would it need to be useful for? Could you tell us your ideas, taking
+care of such key words as follows:
+
+ - Data release
+
+ - Software release
+
+ - Survey plan & schedule
+
+ - Survey progress & status report
+
+ - Technical reports
+
+    - Instrument performance
+
+    - Before and after of trouble shooting, maintenance work, upgrade, etc
+
+    - Features in data, tips for reduction & calibration, etc
+
+ -  Public information & outreach
+
+Below a couple of examples from existing survey archives are presented
+as references/starting points of discussion:
+
+ - SDSS Data Release website: http://www.sdss.org/dr7/
+
+ - A presentation file from LAM about an example of archive system for
+   an other survey: 
+   http://sumire.pbworks.com/w/file/71220426/vuds_olf_nov13.pptx
+
+A. All of the above 'key words'!. SDSS sets a very high standard to
+which we can aspire.
+
+4.7 Data release
+
+As a background of survey archive, we need to perform continuous data
+reduction and periodic re-reduction of full data set. Single(?) data
+reduction after each observation (single day or single run) could be
+performed on-premise (or even using on-site DR facility at Hilo
+supplied by us, although we need to care about already exposed data
+set...).  And this will not be an issue. For continuous data release
+like a "DR" of SDSS, Robert Lupton suggested to go cloud. Total "raw"
+data set will be around 0.5PB (to 1PB), and even after reduction it
+will be a level of 1PB including intermediate data. It could be
+possible.  
+
+Q. 7.0-a Do we need such periodical data release?
+
+A. Yes. 
+

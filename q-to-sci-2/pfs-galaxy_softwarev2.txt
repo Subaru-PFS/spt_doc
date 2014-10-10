@@ -1,0 +1,265 @@
+
+1. The basic table
+
+We plan a two-tiered survey, with a wider (25 deg^2) and 
+deeper (10 deg^2) component
+
+A. Exposure times: 
+
+We would ask to change the "total integration time per object"
+of the cosmology component from "15 min" to "15 or 30 min",
+since we would request to visit our QSO/AGN targets twice in
+the cosmology component.
+
+B. Science target density (#/PFS pointing): 
+	Wider - 15,000 sources per PFS pointing
+	Deeper - 29,000 sources per PFS pointing
+
+Roughly speaking, we plan to target 75% of these, which requires 
+roughly 5 visits over the wider and 10 visits over the deeper fields.
+
+The primary targets range in redshift between z~0.7 and z~7.  There will 
+be low-redshift objects as well (including stars) that we will need the 
+software to recognize. 
+
+The total integration times range from 1hr to 6hrs (or 
+perhaps more, for a very small subset).
+
+C. Number of sky fibers: We have been assuming 2000 science fibers 
+in our estimates.  However, ideally we would like to calculate our 
+optimal targeting efficiency over 5 or 10 visits, with the remaining 
+fibers being allocated to sky.
+
+D. Distribution of sky fibers: Uniform.
+
+E. Number of calibration stars: According to Jim-Sensei, there are 
+~30 suitable calibration stars per pointing, of which we perhaps 
+want to have at least 20 (to ensure we get a few good ones).
+
+F. Distribution of calibration stars: As given by nature.
+
+Now, we turn to the specific questions.
+
+Q 2.1-a
+
+Our source catalogs will be based on HSC+NIR catalogs. These catalogs 
+should be in hand and finalized by the start of the PFS survey. 
+The astrometry, etc, will be uniform for the matched catalogs.
+
+Quasars will be selected based on the HSC photometric
+colors, time-variability info, and external multi-wave info 
+(including VIKING, UKIDSS, AKARI, WISE, FIRST, XMM, ...). The 
+coordinate info of the targets will be based on the HSC astrometry 
+results. Note that most of our targets are point sources.
+
+Q2.2-a
+
+To zeroth order, we envision setting the targeting for all ten visits in 
+advance, to maximize the total number of observable sources, given 
+the target densities listed above.  To first order, the list of targets 
+may change in real time based on quick-look redshifts, as described 
+below (Q3.0-b).
+
+We will plan to dither field centers by one cobra pointing between 
+integrations, to ensure that targets fall on different parts of 
+the detector and thus mitigate against various systematics.
+
+Q2.2-b
+
+In the Galaxy/AGN fields, we will be visiting fields 5-10 times.  We
+will only need small (8") dithers about the nominal center.  This
+should mean that our main algorithms for assigning fibers can be done
+per field with effectively a single center.  We will likely be revisiting a 
+small number of targets after a time delay (e.g., the AGN).
+
+In the cosmology survey, we want to revisit all AGN candidates for 
+both 2 visits, for a total of 30 min integrations. In the galaxy 
+survey, we will likely want 1-3 hr integrations, depending on the 
+magnitude. If it is possible to arrange, we may want to accumulate 
+these with a time separation between individual 20 min exposures, 
+to examine variability issues.  We will have to examine the feasibility 
+and scientific return of multiple exposures, but would like to keep 
+this option open for now.
+
+Note: 
+SPT = "SURVEY PLANNING AND TRACKING" (SOFTWARE). ETS = "EXPOSURE TARGETING SOFTWARE".  DRP = DATA REDUCTION PIPELINE
+
+We need "SPT" and "ETS", which can prepare multiple visits for one 
+field (possibly different PA and slightly different FoV center) 
+with handling
+1) some objects need to be observed only one time and should not
+be observed in the following visits,
+2) some objects need to be observed multiple times and once they
+are allocated in one visit, they need to be allocated in the 
+following visits until they are observed with required times,
+3) some objects need to be observed multiple times but if they
+cannot be observed required number of times in the planned
+multiple visits, they should not be allocated (or allocated lower
+priority than 2).
+In addition, we need "DRP" which can combine spectra from multiple
+visits only for objects which are observed multiple times.
+
+
+Q2.2-c
+
+No more than may result from the dithers discussed above.
+
+Q2.3-a
+
+Our goal in allocating fibers will simply be to maximize the total 
+number of sources in the field over the 5-10 visits.  Because of 
+the differing exposure times for different classes of object, different 
+fibers will be assigned variable total numbers of objects.
+
+There are some special sub-classes of targets (LAEs, AGNs) that should
+be given higher weight since they are rare.
+
+
+Q2.3-d
+
+We will use F sub-dwarfs as in SDSS with the goal of 20-30 
+per field.
+
+Q2.3-e
+
+"Blank" fibers will be those to which we could not efficiently assign
+a target.  We would like the targeting software to use HSC imaging to
+identify blank regions of sky from which we can choose the sky fibers.
+Ultimately, we will have to take some data to know exactly how many
+sky fibers are needed to accurately model the sky.
+
+Q2.3-f
+
+Roughly speaking, the sky fibers should be uniformly distributed. 
+
+Q3.0-a
+
+In general, we do not have strong cadence requirements, because of our 
+multiple visits.  We likely want to complete 6 hours of observation 
+on a given field within a single run to complete the faintest targets 
+if possible.
+
+If there are no major demerits from the multiple visits with long 
+time intervals, for example, in a time scale of several months to 
+years, we would like to observe quasar targets (but not necessarily 
+for all targets) in different seasons. Such observations will help 
+to discover rare transient phenomena (such as type1-type2 transitions 
+of AGNs), which will bring the first statistics for those phenomena. 
+Again we note that this will not be a primary science driver.
+
+
+Q3.0-b
+
+Here we provide some details on the type of QA we would like. 
+We would like a system similar to the SDSS model:
+
+-- After each 20min exp, we would like to evaluate the average 
+quality of the spectra *as a function of fiber magnitude*.  We would like the 
+QA software to return a S/N at each magnitude. If above the minimum 
+acceptable, we can use the exposure.  Otherwise not.
+
+-- Since we have such a wide array of redshifts and magnitudes, we may 
+also want to tune the band where the S/N is evaluated (e.g., blue arm for 
+the LAEs, but NIR arm for the z~1 survey, etc).
+
+-- Our most demanding and complicated request of the QA software 
+is that we would like to evaluate redshifts in real time.  Specifically, 
+we expect some contamination to our samples from very faint, blue 
+low-z galaxies.  These low-z galaxies will have strong emission lines 
+in general, so that a redshift determination after a single 20min 
+exposure will likely be possible.  We would like the software to 
+evaluate a crude (emission-line) redshift after each exposure.  If 
+the object is at z<0.5, then we will have a second target to replace 
+it within the same cobra region.
+
+Q4.0-a
+
+We are interested in measuring the SED of each object, and all measurements 
+that arise from that, including redshift, stellar population properties, 
+emission-line widths and ratios, stellar velocity dispersions in bright 
+systems, continuum flux, broad spectral features (e.g., FeII emission in quasars). 
+We need real spectrophotometry both for redshifts and for all science 
+applications.
+
+Q4.0-b
+
+We are currently developing multiple redshift codes.  We will be relying on 
+both continuum/absorption line information and emission line information.
+We will be interested in stacking spectra, in forward modeling 
+to extract the most from the low S/N spectra we expect, etc.
+
+Q.4.0-c
+In the case of quasars (almost point sources even under the Subaru 
+seeing), SDSS-like spectrophotometry would be useful for AGN time 
+variability studies because we can see quantitatively accurate 
+spectral difference both for AGN continuum and emission lines. 
+Accurate wavelength calibration in short optical 
+wavelengths where strong airglow lines are not available in the 
+object spectra is also required.
+
+Q.4.0-d
+As mentioned above, probably we need flux-calibrated spectra for 
+each individual exposure for time-domain studies.
+
+
+Q4.1-a
+
+We might be interested in evaluating S/N on the line for the LAEs and
+drop-outs in the sample.  For the redshift 1-2 sample, we will want a
+continuum S/N evaluation.  We will also want benchmark measurements 
+of the quality of sky subtraction, and measurements of the brightness 
+of the sky (both in strong lines and continuum in the red, and in continuum 
+in the blue).
+
+Q4.1-c 
+
+Considering the intrinsic differences on an object-by-object basis, we
+do not wish to evaluate completion separately for each object, but
+rather based on some kind of average S/N criterion.  As mentioned above, this 
+should be based on average behavior in fiber magnitude bins, since depending 
+on conditions (seeing, clouds, etc) we may not achieve our target 
+S/N in a given total exposure time.
+
+
+Q4.1-d
+
+At the point when we can no longer efficiently allocate fibers then
+there is no point in continuing to revisit a field and we should
+declare it done.  We need to do some targetting simulations 
+to determine that threshold.
+
+Q4.1-e
+
+In the early stages, of course, we will want to test the QA software 
+using the full reductions.  However, in general, we hope that the 
+S/N estimates will only *improve* following full reductions, so that 
+the QA estimates should be a conservative guess as to whether 
+the data quality are sufficient.  We might more aggressively revisit our 
+rare sub-groups (quasars and LAEs).  Throughout the survey we will want 
+the full reductions to report summary statistics, describing the quality of 
+each observation.
+
+Q4.1-f
+
+Yes, regular status reports will be very important for 
+ongoing planning. The report should include also weather 
+information, not only the data acquisition status and the data 
+quality.
+
+
+Q6.0-a
+
+This is a very broad question. We certainly want regular data releases, 
+and a plan to do so.
+
+One obvious early benchmark for us will be the two-pointing 
+magnitude-limited sample that we would like to do in the first 
+season.  These data will be used not only for early science 
+papers, but also to fine-tune our selection criteria for the main 
+survey.  Here we would want access to the data very rapidly for 
+planning purposes.
+
+Later data releases will be based on more sophisticated/improved 
+data reduction software, and such continuous improvements are useful.
+
+
