@@ -1,0 +1,11 @@
+\newcommand{\sssec}{\@arabic\c@subsection.\@arabic\c@subsubsection}
+
+\definecolor{ccols}{rgb}{1,0,0}
+\definecolor{ccolm}{rgb}{0,0.25,0.5}
+\newcommand{\cols}[1]{\textcolor{ccols}{Q. \sssec-#1}}
+\newcommand{\colm}[1]{\textcolor{ccolm}{Q. \sssec-#1}}
+%\newcommand{\colm}[1]{\textcolor{ccolm}{\thesubsubsection-#1}}
+
+\renewcommand*\l@subsection{\@dottedtocline{2}{2.0em}{5.3em}}
+
+
