@@ -4,12 +4,9 @@
 \title{Items to be discussed on science requirements on PFS software}
 \author{Atsushi Shimono + Naoyuki Tamura}
 
-\definecolor{ccols}{rgb}{0.7,0.25,0}
-\definecolor{ccolm}{rgb}{0,1,0}
-\definecolor{ccoll}{rgb}{0,0.25,0.5}
-\newcommand{\cols}[1]{\textcolor{ccols}{#1}}
-\newcommand{\colm}[1]{\textcolor{ccolm}{#1}}
-\newcommand{\coll}[1]{\textcolor{ccoll}{#1}}
+\newcommand{\cols}[1]{\textcolor{red}{#1}}
+\newcommand{\colm}[1]{\textcolor{yellow}{#1}}
+\newcommand{\coll}[1]{\textcolor{blue}{#1}}
 
 \begin{document}
 
@@ -24,39 +21,33 @@
 \ssnhead
 
 \section{Abstract}
-\label{sec:abs}
 
-This document is to start discussion to collect requirements from the science 
-team to the PFS software. 
-Especially from the survey operation point of view, what each software 
-component need to do and what kind of user interfaces are necessary 
-are expected to be clarified. 
-
-In Section \ref{sec:backbround}, current ideas and understandings 
-of possible styles of PFS surveys at the instrument builders' sides are 
-presented, 
-and in Section \ref{sec:questions}, questions and future discussion items 
-are listed so that replies from the science team to the instrument builders 
-can be considered as pieces of the science requirements to the PFS software. 
+To start discussion of Science (L1) requirements on PFS software in 
+various aspects especially on science operation point of view, from what 
+software needs to do and what user interface is necessary, 
+this document presents a collection of ideas and understandings from 
+the instrument builders' side, and also questions and discussion items 
+are listed. 
 
 
-\section{PFS Survey Basics}
-\label{sec:background}
+\section{Background}
 
-Some basic features of PFS surveys can be listed as follows: 
+PFS software related on PFS survey are summarized in this part, with two 
+sections : "how PFS software handles PFS survey", and "what is PFS software 
+itself". 
+
+Basic nature on PFS survey could be listed as: 
 \begin{itemize}
-  \item PFS survey will consist of four sub-surveys 
-    having different requirements as exemplified 
-\footnote{feature? requirement?}
-    in Table.~\ref{tab:sciops-scireq-subsvy}. 
-  \item Sub-surveys may share fields and/or exposures.
+  \item PFS survey will consist of four sub-surveys, 
+    with different requirements (e.g. Table.~\ref{tab:sciops-scireq-subsvy}) 
+    on planning and data quality assuarance
+  \item Sub-surveys may share fields and/or exposure
   \item More targets may exist than fiber \# per single field, 
-    so each field may be exposed multiple times, 
-    depending on sub-surveys and their goals.
-  \item Since a large number of fibers are available and the number of targets 
-    is probably even larger, processes of survey planning, execution, and 
-    data reduction should be automated as much as possible. 
+    and each field will be exposed multiple times (if specified by sub-survey?)
 \end{itemize}
+
+Also, due to large number of targets and fibers, everything is better to be 
+made automatic as much as possible. 
 
 \begin{table}[htb]
 \caption{Requirements per sub-survey (sample; not completed)}
@@ -77,44 +68,18 @@ Calibration star number per field & ? & ? & ? & ? \\
 \end{center}
 \end{table}
 
-\subsection{Processing a survey}
-\label{sec:background:survey}
+\subsection{How PFS survey will be executed}
 
-title\footnote{Processing? Executing? }
+Entire PFS survey will be executed in several stages: planning, observation, 
+and data reduction. 
 
+\subsubsection{Survey planning}
 
-\subsubsection{Planning}
-\label{sec:background:survey:planning}
-
-Having target lists as inputs from all sub-surveys, 
-fields of which centers correspond to telescope pointings are defined 
-and fibers are then allocated to targets in each field
+Based on target lists from several surveys and their several sub-surveys, 
+fields are defined and fibers are allocated for a series of exposures 
 (e.g. Figure.~\ref{fig:sciops-scireq-slide-svyexp}). 
 
-Multiple fiber
-allocations may be considered on a single field so that more targets can
-be observed. {\it Some rules need to be applied in defining the fields
-(i.e. field center \& position angle are chosen) and allocating fibers
-to targets, in order to maximize survey observation efficiency.}  
-In the fiber allocation, some key instrument features such as collisions of
-neighboring fiber positioners and field distortion on the PFI focal
-plane also need to be taken into account.
 
-
-In Figure.~\ref{fig:sciops-scireq-slide-svyexp}, 
-each survey (A, B, C) will supply lists of targets (catalogues), 
-and some survey might use several lists (e.g. A1, A2, and A3 at left-most 
-schematic). 
-Using these lists of targets, exposure fields (a, b, c, ...) will be defined 
-and targets will be assigned to each field (or more than one field if we 
-dither or make overlaps). 
-For each field, we will have 2396 circular fiber positioner patrol area 
-with some overrapped area (right two schematics). 
-We assume to have multiple targets (objects) within each patrol area, 
-and software will assign targets into fiber positioners and exposures. 
-Some targets requires multiple exposures to complete required exposure time, 
-and multiple exposures will be assigned for these targets
-(middle bottom table). 
 
 \begin{figure}[htb]
   \begin{center}
@@ -127,9 +92,8 @@ and multiple exposures will be assigned for these targets
 
 
 \subsubsection{Observation at the summit}
-\label{sec:background:survey:summit}
 
-From instrument operation point of view, observation (series of exposures) 
+>From instrument operation point of view, observation (series of exposures) 
 will be executed as a flow in Figure.~\ref{fig:sciops-scireq-slide-oneexp}. 
 IR detector data will be continuously read from detector during exposure 
 (up-lamp), and will be finalized to a single image per detector just after 
@@ -149,25 +113,6 @@ Results from on-site quick data reduction will be transferred to survey
 planning software and also observation operators to check and consider of 
 following exposures. 
 
-In Figure.~\ref{fig:sciops-scireq-slide-oneexp}, the basic instrument
-operation and data flow in PFS observation is described as a
-flowchart. Once the previous exposure is completed, the telescope starts
-slewing to the next target field. Using the Acquisition \& Guide (A\&G)
-cameras, field acquisition is performed and auto guiding is then
-initiated. In parallel to these, fiber configuration is executed, and a
-new exposure is started. While CCD detectors are read out only once at
-the end of an exposure, IR detector is continuously read out during an
-exposure (so-called up-lamp) and outputs a single FITS image at the end
-making use of all the data in the intermediate readouts. The FITS data
-from the CCD and IR detectors are transferred to Hilo and on-site quick
-data reduction process is applied, during the next exposure (see the
-). Results from this on-site quick data reduction will be transferred to
-survey planning \& tracking software for records so that the operators
-at the summit can check and consider them for subsequent exposures. Some
-more details about the quick and full data reduction pipelines are given
-in \S~\ref{datareduction}.
-
-
 \begin{figure}[htb]
   \begin{center}
     \includegraphics[width=.75\linewidth]{sciops-scireq-slide-oneexp.png}
@@ -176,29 +121,23 @@ in \S~\ref{datareduction}.
   \label{fig:sciops-scireq-slide-oneexp}
 \end{figure}
 
-%\paragraph{Updating exposure configuration to fit with condition}
-%
-%Actual observation PA (of telescope; PA${}_{\text{tel}}$) 
-%will be defined at the Summit just before each exposure, 
-%since rotation angle of PFI from the center need to be restricted within $\pm$ 
-%60 degree ([TBC]) to make fiber FRD small as possible. 
-%We have rotation symmetry by 60 degree on focal plane including fiber 
-%positioner and A\&G camera, we can rotate PFI by 60 degree to get the same 
-%PA of fiber distribution (PA${}_{\text{sky}}$) and exposure configuration 
-%(excluding individual difference among each fiber). 
-%To adjust PA${}_{\text{tel}}$ and configuration of PFI by rotating integral 
-%multiplication of 60 degree from PA${}_{\text{sky}}$, 
-%we need to update fiber configuration and object positions of A\&G and AG 
-%with using final settings of PA${}_{\text{tel}}$, 
-%to meet with small shift per each fiber positioner. 
-%
-%Also ETS need to consider of these possible error areas for collision 
-%detection among positioners during fiber configuration trial, 
-%while defining exposure configuration at off-site. 
-%
+\paragraph{Updating exposure configuration to fit with condition}
+
+Actual observation PA will be defined at the Summit just before each exposure, 
+since rotation angle of PFI from the center need to be restricted within $\pm$ 
+60 degree ([TBC]) to make fiber FRD small as possible. 
+We have rotation symmetry by 60 degree on focal plane including fiber 
+positioner and A\&G camera, we can rotate PFI by 60 degree to get the same 
+exposure configuration (excluding individual difference among each fiber). 
+To adjust PA of PFI by rotating integral multiplication of 60 degree, 
+we need to update fiber configuration and object positions of A\&G and AG 
+with using final settings of PA, to meet with small shift per each fiber 
+positioner. 
+Also ETS need to consider of these possible error areas for collision 
+detection among positioners during fiber configuration trial. 
+
 
 \paragraph{QA on-site}
-\label{sec:background:survey:qa}
 
 For exposed data quality assuarance on site, 
 PFS survey requires to perform it after each exposure, 
@@ -261,6 +200,19 @@ roughly as follows (see also Figure.~\ref{fig:sciops-scireq-drp-slide}):
     values
 \end{itemize}
 
+Currently, several statistical requirements are already included 
+into PFS L2 requirements: 
+\begin{itemize}
+  \item REQ-SYS-679, sky subtraction to the accuracy of 0.5\% [TBC] or better 
+    of sky
+  \item REQ-SYS-896 (890), subtract diffuse background to [TBD] e- accuracy
+  \item REQ-SYS-688, flat-field systematics in fibers and detectors to 0.5\% 
+    [TBC] or better
+  \item REQ-SYS-696, wavelength to 0.01 pixel [TBC] accuracy
+  \item REQ-SYS-656, relative flax of individual object spectrum to 5\% [TBC]
+    accuracy
+\end{itemize}
+
 \begin{figure}[htb]
   \begin{center}
     \includegraphics[width=.75\linewidth]{sciops-scireq-drp-slide.png}
@@ -274,7 +226,8 @@ roughly as follows (see also Figure.~\ref{fig:sciops-scireq-drp-slide}):
 \subsection{PFS Software}
 
 To perform all required activities on PFS, PFS software is defined as 
-four packages: 
+four packages and execute survey as
+Figure.~\ref{fig:sciops-scireq-slide-softcoord}: 
 \begin{description}
   \item[ICS] Instrument Control Software (OBCP at Subaru)
     \begin{itemize}
@@ -299,10 +252,6 @@ four packages:
     \end{itemize}
 \end{description}
 
-Entire survey are planned and executed as schematic flow chart, 
-Figure.~\ref{fig:sciops-scireq-slide-softcoord}. 
-Items within this schematic flow are 
-
 
 \begin{figure}[htb]
   \begin{center}
@@ -314,7 +263,7 @@ Items within this schematic flow are
 \end{figure}
 
 
-From data point of view, each package will handle data or table as colorized 
+>From data point of view, each package will handle data or table as colorized 
 in Figure.~\ref{fig:sciops-scireq-slide-data}. 
 Supplied objects by catalogues from science team will be mapped into 
 exposure field lists. For each exposure field list, multiple exposure 
@@ -531,7 +480,7 @@ At this moment, system design is at conceptural level and no detailed design
 is planned, discussion of user interface is just on a side of stored data, but 
 not actual panel list nor its mock-ups. 
 
-From SDSS, Michael Strauss gave us a presentation titled "SDSS survey design 
+>From SDSS, Michael Strauss gave us a presentation titled "SDSS survey design 
 \& operation: Inputs for PFS". 
 
 We will have three phases for survey organization, and requirements should be 
@@ -678,27 +627,6 @@ Any requirements on calibrations?
   \item Cross-check by calibrating calibration object by themselves within a 
     frame
 \end{itemize}
-
-
-
-\appendix
-
-\section{Related L2 requirements allocated to software}
-
-Currently, several statistical requirements are already included 
-into PFS L2 requirements: 
-\begin{itemize}
-  \item REQ-SYS-679, sky subtraction to the accuracy of 0.5\% [TBC] or better 
-    of sky
-  \item REQ-SYS-896 (890), subtract diffuse background to [TBD] e- accuracy
-  \item REQ-SYS-688, flat-field systematics in fibers and detectors to 0.5\% 
-    [TBC] or better
-  \item REQ-SYS-696, wavelength to 0.01 pixel [TBC] accuracy
-  \item REQ-SYS-656, relative flax of individual object spectrum to 5\% [TBC]
-    accuracy
-\end{itemize}
-
-
 
 
 \end{document}
