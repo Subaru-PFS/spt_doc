@@ -57,14 +57,21 @@ Some basic features of PFS surveys can be listed as follows:
 \label{tab:sciops-scireq-subsvy}
 \begin{center}
 \begin{tabular}{c|c|c|c|c}
-conditions & cosmology & GA-LR & GA-MR & galaxy-AGN \\
+conditions & cosmology & GA-LR & GA-MR & galaxy-AGN \\ \hline
 \hline
+Individual exposure time & 15min & 15min & 15min & 15min \\
 \hline
-typical integration time & 15min & 120min & 180min & 180min \\
+Total integration time per object & 15min & 120min & 180min & 180min \\
 \hline
-Sky fiber number per field & ? & ? & ? & ? \\
+Science target density (\#/arcmin) & ? & ? & ? & ? \\
 \hline
-Calibration star number per field & ? & ? & ? & ? \\
+Number of sky fibers per field & ? & ? & ? & ? \\
+\hline
+Distribution of sky fibers over field & ? & ? & ? & ? \\
+\hline
+Number of calibration stars per field & ? & ? & ? & ? \\
+\hline
+Distribution of calibration stars over field & ? & ? & ? & ? \\
 \hline
  : & : & : & : & : \\
 \end{tabular}
@@ -73,11 +80,11 @@ Calibration star number per field & ? & ? & ? & ? \\
 
 \subsection{Processing a Survey}
 
-\subsubsection{Planning}
+\subsubsection{Preparation}
 
-Having target lists as inputs, fields of which centers correspond to
-telescope pointings are output and fibers are then allocated to targets
-in each field
+Having master catalog(s) of target objects as inputs, fields of which
+centers correspond to telescope pointings are output and fibers are then
+allocated to targets in each field
 (e.g. Figure.~\ref{fig:sciops-scireq-slide-svyexp}). Multiple fiber
 allocations may be considered on a single field so that more targets can
 be observed. {\it Some rules need to be applied in defining the fields
@@ -85,7 +92,7 @@ be observed. {\it Some rules need to be applied in defining the fields
 to targets, in order to maximize survey observation efficiency.}  In the
 fiber allocation, some key instrument features such as collisions of
 neighboring fiber positioners and field distortion on the PFI focal
-plane also need to be taken into account.
+plane will also be taken into account.
 
 \begin{figure}[htb]
   \begin{center}
@@ -193,12 +200,12 @@ and other collaboration meetings).
 %Current assumpsions are 
 %\begin{itemize}
 % \item Host at Hilo, transfer data in parallel or right after submitted%
-%	to Gen2
+%    to Gen2
 %       \begin{itemize}
-%	\item IR (up-ramp) : just transfer finalized image not raw
-%	      up-ramp, right after end of exposure and image
-%	      finalization
-%	\item other : transfer data right after end of readout
+%    \item IR (up-ramp) : just transfer finalized image not raw
+%          up-ramp, right after end of exposure and image
+%          finalization
+%    \item other : transfer data right after end of readout
 %      \end{itemize}
 % \item Calibrate with pre-built data, but not with simultaneous 2D/1D 
 %       calibration data (including PSF/FRD)
@@ -220,11 +227,11 @@ applied
 over the data set acquired by the exposure and pre-defined calibration data 
 and some QA process is performed, but {\it QA process has not
 been specifically defined yet.}  One example that will likely be
-implemented is the measurement of signal-to-noise ratios of spectra of
-science and calibration targets, but if others are needed, they should
-be requested, although what information can be extracted with good
-enough accuracy from a single exposure is somewhat unclear at this
-moment. Based on the results from on-site quick DRP, observation
+implemented is the measurement of signal-to-noise ratios (S/N) of
+spectra of science and calibration targets, but if others are needed,
+they should be requested, although what information can be extracted
+with good enough accuracy from a single exposure is somewhat unclear at
+this moment. Based on the results from on-site quick DRP, observation
 strategy may be updated during a run (or even during a night, if
 required), but the information that can be obtained is limited by the
 capability of quick DRP. Clearly trade studies will be needed by
@@ -251,38 +258,39 @@ exposures, etc) is expected to be updated by SPT.
   \label{fig:sciops-scireq-drp-slide}
 \end{figure}
 
-\subsection{PFS Software Packages}
+\subsection{PFS Software lineup}
 
 To perform all required activities on PFS, PFS software is defined as
 four packages and executes a survey as
 Figure.~\ref{fig:sciops-scireq-slide-softcoord}:
 \begin{description}
- \item[ICS] Instrument Control Software (so-called OBCP at Subaru)
-	    \begin{itemize}
-	     \item Everything from observation operation (provided exposure
-		   configuration) to output raw data.
-	     \item Including control software directly connected to hardware
-	     \item Including software for engineering, heartbeat, etc.
-	    \end{itemize}
+ \item[ICS] Instrument Control Software\footnote{So-called ``OBCP'' in
+        the Subaru's terminology is a key role of ICS.}
+        \begin{itemize}
+         \item Everything from observation operation (provided exposure
+           configuration) to output raw data.
+         \item Including control software directly connected to hardware
+         \item Including software for engineering, heartbeat, etc.
+        \end{itemize}
  \item[DRP] Data Reduction Pipeline
-	    \begin{itemize}
-	     \item Reducing and calibrating raw data for science
-	     \item On-site quick look DRP, reduced data archive
-	    \end{itemize}
+        \begin{itemize}
+         \item Reducing and calibrating raw data for science
+         \item On-site quick look DRP, reduced data archive
+        \end{itemize}
  \item[ETS] Exposure Targeting Software
-	    \begin{itemize}
-	     \item From possible target lists in a single field to fiber
-		   configuration for a single exposure
-	     \item Handling coordinate transformation related on sky coordinate
-		   (within one field)
-	    \end{itemize}
+        \begin{itemize}
+         \item From possible target lists in a single field to fiber
+           configuration for a single exposure
+         \item Handling coordinate transformation related on sky coordinate
+           (within one field)
+        \end{itemize}
  \item[SPT] Survey Planning and Tracking software
-	    \begin{itemize}
-	     \item From large survey target lists to series of exposures on
-		   multiple fields
-	     \item Tracking survey progress including data QA for every
-		   exposure (by off-site full-DRP)
-	    \end{itemize}
+        \begin{itemize}
+         \item From large survey target lists to series of exposures on
+           multiple fields
+         \item Tracking survey progress including data QA for every
+           exposure (by off-site full-DRP)
+        \end{itemize}
 \end{description}
 
 \begin{figure}[htb]
@@ -294,225 +302,330 @@ Figure.~\ref{fig:sciops-scireq-slide-softcoord}:
   \label{fig:sciops-scireq-slide-softcoord}
 \end{figure}
 
-From data point of view, each package will handle data or table as colorized 
-in Figure.~\ref{fig:sciops-scireq-slide-data}. 
-Supplied objects by catalogues from science team will be mapped into 
-exposure field lists. For each exposure field list, multiple exposure 
-configuration will be created, and results or intermediate outputs 
-will be attached to each configuration and each field list. 
-For each exposure configuration, exposed data and reduced results will be 
-attached after execution of exposure. 
+From data point of view, each package will handle data or table as
+color-coded in Figure.~\ref{fig:sciops-scireq-slide-data}. Supplied
+objects by catalogues from science team will be mapped into exposure
+field lists. For each exposure field list, multiple exposure
+configuration will be created, and results or intermediate outputs will
+be attached to each configuration and each field list.  For each
+exposure configuration, exposed data and reduced results will be
+attached after execution of exposure.
 
 \begin{figure}[htb]
   \begin{center}
     \includegraphics[width=.75\linewidth]{sciops-scireq-slide-data.png}
   \end{center}
-  \caption{Relationship between supplied and exposed data from catalogue to 
-    survey tracking data}
-  \label{fig:sciops-scireq-slide-data}
+  \caption{Relationship between supplied and exposed data from catalogue
+    to survey tracking data} \label{fig:sciops-scireq-slide-data}
 \end{figure}
+
+
+\clearpage
 
 \section{Questions and Discussion items}
 
-In this section, a list of questions and discussion items to the science
-team are presented, in order to collect requirements needed to develope
-the listed software packages. Honestly speaking, there may be missing
-questions and discussion items, so comments and additionals are very
-welcome.
+In this section, a list of questions to the science team and future
+discussion items are presented, in order to collect requirements needed
+to develope the listed software packages.
 
-Color of each question number indicates: 
+The priorities \& types of questions/discussion items are color-coded as
+follows:
 \begin{enumerate}
-  \item[\cols{a}] High priority. Replies are requested in a short time
-	       scale, like 1 month.
-  \item[\coll{b}] Less urgent. It would be great to have replies e.g. in
-	       6 months.
-  \item[c] Others
+  \item[\colm{x}] High priority. Replies are requested in a short time
+           scale, like 1 month.
+  \item[\cols{x}] Less urgent, so please send replies in 6 months.
+  \item[\coll{x}] Others
 \end{enumerate}
 
-\subsection{Survey definitions}
-
-\begin{enumerate}
-  \item[\colm{a}] Complete summary table like Table.~\ref{tab:sciops-scireq-subsvy}.
-\end{enumerate}
-
-\subsection{Functional requirements for survey observation}
-
-This section covers what software need to perform or consider, on both
-types of activities:
+{\bf Important notes:}
 \begin{itemize}
-  \item while defining series of real exposures from list of science targets, 
-    both survey planning activities before survey observations (or submitting 
-    survery proposal, if possible), and survey coordination during the survey 
-    observation. 
-  \item while observation is on-going at on-site, while one night or one run 
-    is on execution, such as updating a sequence from exposed data or by 
-    conditions in time. 
+ \item Replies do NOT need to be based on solid plans. Please tell us
+       current versions of them, which should give us ideas of your
+       requirements and restrictions to the software system and should
+       be a good starting point of discussion.
+       (So, any comment or suggestion is welcome, even not an idea nor reply.) 
+ \item Honestly speaking, there may be some important questions and
+       discussion items that are missed from this document, so comments
+       and additions are welcome.
+ \item The format of some questions may not be ideal and therefore may
+       not allow you to answer them easily. In such a case, please send
+       us your comments and point out why you feel it difficult to
+       reply. For example:
+       \begin{itemize}
+    \item Question is not well understood.
+    \item Question is not applicable to my survey.
+    \item My survey has different types of requirements such as ... 
+    \item ... etc
+       \end{itemize}
 \end{itemize}
 
-\subsubsection{Defining fields, dividing targets into exposures}
-
-To define exposures, we need to define fields (field center and PA), and 
-assign targets to each field and to each fiber. 
-
-\paragraph{Defining fields}
-
-Outermost shape of PFS exposure field is hexagonal, and we can tile by 
-honeycomb structure without (large) gap between fields. 
+\subsection{Survey basics}
 
 \begin{enumerate}
-  \item[\colm{a}] Do we have overlap region among fields or not?
-  \item[\colm{a'}] If we have overlap, how much --- half? 1/3?
-  \item[\colm{b}] Use the same field center, or dither per every exposure
-  \item[\colm{c}] Use the same PA of field, or rotate by smaller than 60 degree?
+  \item[\colm{a}] Complete Table~\ref{tab:sciops-scireq-subsvy} by
+           checking the numbers that already exist, and giving
+           typical numbers to the slots currently occupied by
+           ``?''. If ANY corrections and/or additions are necesary,
+           please send them to us.
 \end{enumerate}
 
+\subsection{Survey preparation}
 
-\paragraph{Restriction among multiple exposures for a single target}
-
-Assumed single exposure time is 15min (900sec), we need to divide longer 
-required exposure time into multiple exposures, e.g. 120min into 8 exposures. 
+\subsubsection{Target list}
 
 \begin{enumerate}
-  \item[\coll{a}] Do we need to finish all exposures within a certain period, like 
-    one day, one observation run, or one semestor/year? Or no limitation? 
-  \item[\colm{b}] Some survey requires software to stop exposure after certain 
-    signal to noise ratio achieved. 
-    If we expose the same field with the same fiber configuration
-    continuously, we cannot stop by the next exposure after achieval. 
-    How do we do -- prevent such continuous exposure (change every objects 
-    at any time), take survey time efficiency by ignoring such small number of 
-    targets.
+ \item[\colm{a}] How would you prepare master catalog(s)?  Please
+          include some explanations of your ideas about the key
+          issues as listed below:
+          \begin{itemize}
+           \item Original data or catalog(s) based on which master
+             catalog(s) for PFS survey are created
+           \item Types of objects to be included. Presumably all
+             potential targets not only for science but also for
+             calibration, field acquisition, and auto guiding
+             (i.e. stars) are included?
+           \item Catalog format (number of columns, parameters to be
+             listed, etc)
+           \item Astrometry (reference star catalog, etc)
+           \item Version control of catalog
+          \end{itemize}
 \end{enumerate}
 
-
-\paragraph{If we dither, rotate or overlap fields}
-
-If field definition is static and almost without gap nor overrap, 
-one target will be mapped into one fiber positioner, and we don't need to 
-care of complex multiple -- multiple assignments. 
-But if not, we might need to care of many things... 
+\subsubsection{Field definition}
 
 \begin{enumerate}
-  \item[\cols{a}] How many targets we can assume per one fiber positioner patrol 
-    area?
-  \item[b] If we have multiple targets within one fiber positioner patrol 
-    area, set of targets per patrol area will differ field by field 
-    (e.g. target A and B are in area 1 for configuration x, 
-    A in 100 and B in 101 for configuration y). 
-    Survey progress will be complexed and it will take more exposurs to 
-    complete "minimum set", is it ok?
-  \item[c] Do we need to optimize exposure configurations and fiber -- target 
-    assignments over entire survey period or just a exposure by a exposure? 
+ \item[\colm{a}] How do you want to determine field centers and position
+          angles of the fields? Are there any possible optimization
+          processes in your mind? Possible examples may be:
+          \begin{itemize}
+           \item Maximizing the accessibility to high-priority
+             science targets
+           \item Maximizing the number of stars that can be imaged
+             by the A\&G cameras for field acquisition and auto
+             guiding.
+           \item Uniformizing the number of science targets per
+             field.
+           \item Pre-defined over entire survey area. 
+          \end{itemize}
+ \item[\colm{b}] Do you need to visit individual fields multiple times?
+          If yes:
+          \begin{itemize}
+           \item How would you define the number of visits? 
+             (e.g. pre-defined number at most, balancing over entire survey 
+             area, certain fraction at least) 
+           \item Would you keep the field center and position angle
+             for all the visits?
+          \end{itemize}
+ \item[\colm{c}] Do you need to have an overlap between neighboring
+          fields? If yes, how would you want to define such an
+          overlap?
 \end{enumerate}
 
+\subsubsection{Fiber allocation}
 
-\subsubsection{How to perform target selection per one field or exposure}
-
-For each field (or each single exposure), PFS survery coordination software 
-need to select a list of targets to be exposed from large lists of targets. 
-Targets could be classified into several types, such as scientific objects, 
-calibration objects (stars), sky region. 
-
-\paragraph{Selection criteria}
+For each field (or each exposure), a list of objects need to be selected
+from the master catalog(s) and fibers are assigned to them for
+integration. In addition to science targets, some fibers will need to be
+allocated to calibration stars and blank sky areas. In some cases, you
+may also want to mix science targets with other sub-surveys into your
+fiber allocation.
 
 \begin{enumerate}
-  \item[\coll{a}] Selection criteria: complex merit function, or index (priority, 
-    category) within supplied catalogue?
-    \begin{itemize}
-      \item merit function : like "index(f(mag) * g(color), h(z))
-      \item index : like "target a,b = 1st / target c,d = 2nd" supplied within 
-        catalog
-    \end{itemize}
-  \item[\coll{b}] How to integrate surveys: within single merit function or predefined 
-    fraction per survey?
-    \begin{itemize}
-      \item When one field or exposure is shared by multiple surveys, we need 
-        to combine two indexes supplied by each survey.
-      \item How to do? Integrate into single merit function, or threshold like 
-        "Survey A index 1 need to be observed up to 80\%", etc.
-    \end{itemize}
+  \item[\coll{a}] Based on what kind of criteria/rules/procedures would
+           you like to select science targets to which fibers are
+           allocated? Some possible examples are:
+           \begin{itemize}
+        \item A merit function that is defined by or calculated from 
+              a subset of
+              parameters in the master catalog.
+        \item Priority that is given in advance to individual
+              objects or categories of them in the master
+              catalog.
+           \end{itemize}
+  \item[\coll{b}] If you need to visit single field multiple times, how
+           would you want to split objects into subsets for the
+           multiple visits and determine fiber allocations?
+  \item[\coll{c}] How do you want to split fibers into the targets for
+           your survey and those for other PFS sub-surveys, if
+           required?
+%   \begin{itemize}
+%     \item When one field or exposure is shared by multiple surveys, we need 
+%       to combine two indexes supplied by each survey.
+%     \item How to do? Integrate into single merit function, or threshold like 
+%       "Survey A index 1 need to be observed up to 80\%", etc.
+%    \end{itemize}
+  \item[\coll{d}] What type of objects (stars) would you select as
+           calibration stars? How many of them will be enough for
+           your goals of calibration (See
+           Table.~\ref{tab:sciops-scireq-subsvy}), accounting for
+           e.g. possibility of cross-check? Any specific
+           requirements to their spatial distribution in the field?
+           \footnote{PFS software will also query catalog(s) of stars 
+           supplied by survey operators, 
+           independently from sub-survey catalog(s).} 
+  \item[\coll{e}] How would you define ``blank'' sky areas for sky
+           fibers? Do you think you can define ``blank'' sky areas
+           just based on the information in your master catalog(s)?
+  \item[\coll{f}] How do you want to spatially distribute the sky fibers
+           in one field?
 \end{enumerate}
 
-\paragraph{Miscellaneous targets}
+%\paragraph{Miscellaneous targets}
+%
+%Definitions of criteria or requirements for miscellaneous targets will 
+%vary per each survey, and we need to have a table like 
+%Table.~\ref{tab:sciops-scireq-subsvy}. 
+%
+%\begin{enumerate}
+%  \item[a] How many fibers need to be assigned to these targets, including 
+%    distribution over a field? 
+%  \item[b] Sky fiber positions checked using HSC image or other scheme?
+%  \item[c] Calibration star selection criteria: color? intensity? instrument deformation?
+%\end{enumerate}
 
-Definitions of criteria or requirements for miscellaneous targets will 
-vary per each survey, and we need to have a table like 
-Table.~\ref{tab:sciops-scireq-subsvy}. 
+\subsection{Observation execution}
 
 \begin{enumerate}
-  \item[a] How many fibers need to be assigned to these targets, including 
-    distribution over a field? 
-  \item[b] Sky fiber positions checked using HSC image or other scheme?
-  \item[c] Calibration star selection criteria: color? intensity? instrument deformation?
+  \item[\coll{a}] Will you possibly want to visit a certain field
+           multiple times in different nights/runs/seasons when it
+           is technically feasible?
+           Or a certain field need to be visited within a single 
+           night/run/season when it is technically feasible? 
+           \footnote{Depending on when you
+           observe a given area of sky, the positions of target
+           objects on the focal plane slightly change due to
+           e.g. differential atmospheric refraction, so fiber
+           positions need to be adjusted accordingly. The operation
+           of the rotator will also be different again depending on
+           observing time, due to the $+/-60^{\circ}$ limitation
+           (for the sake of minimizing Focal Ratio Degradation (FRD)
+           variation, exploiting the hexagonal symmetry of the focal
+           plane).}
+  \item[\coll{b}] As mentioned in the other parts of this document, we
+           expect some QA process is performed and based on the
+           information from it observation strategy (e.g. field
+           definition, fiber configuration, required number of
+           exposures, etc) may be updated. How often would you
+           likely want to apply such updates? Next possible exposure
+           \footnote{QA by on-site quick DR will be performed during next 
+           exposure.}?
+           Between nights?
+%  \item[\colm{c}] Some survey requires software to stop exposure after certain 
+%    signal to noise ratio achieved. 
+%    If we expose the same field with the same fiber configuration
+%    continuously, we cannot stop by the next exposure after achieval. 
+%    How do we do -- prevent such continuous exposure (change every objects 
+%    at any time), take survey time efficiency by ignoring such small number of 
+%    targets.
 \end{enumerate}
 
+%\paragraph{If we dither, rotate or overlap fields}
+%
+%If field definition is static and almost without gap nor overrap, 
+%one target will be mapped into one fiber positioner, and we don't need to 
+%care of complex multiple -- multiple assignments. 
+%But if not, we might need to care of many things... 
+%
+%\begin{enumerate}
+%  \item[\cols{a}] How many targets we can assume per one fiber positioner patrol 
+%    area?
+%  \item[b] If we have multiple targets within one fiber positioner patrol 
+%    area, set of targets per patrol area will differ field by field 
+%    (e.g. target A and B are in area 1 for configuration x, 
+%    A in 100 and B in 101 for configuration y). 
+%    Survey progress will be complexed and it will take more exposurs to 
+%    complete "minimum set", is it ok?
+%  \item[c] Do we need to optimize exposure configurations and fiber -- target 
+%    assignments over entire survey period or just a exposure by a exposure? 
+%\end{enumerate}
 
+\subsection{Data reduction}
 
-\subsubsection{Survey data quality assuarance and feedback to survey coordination}
+%This section covers requirements about data reduction pipeline from raw
+%data to reduced 1D spectrum and scientific values extracted from
+%spectrum \footnote{Check later section for reduced data and scientific
+%values' archive.}. Science requirements including reduction and
+%calibration accuracies shall be discussed in separated for two modes.
 
-Details of pipeline will be next section --- requirements for DRP. 
+%\subsubsection{On-site quick DRP}
+
+%\subsubsection{off-site full data reduction pipeline}
+
+%For functional requirements, final output from data reduction pipeline
+%will be survey archive data, such as table of astrophysical values,
+%reduced data sets (1D spectra and required intermediate outputs). 
+
+%On this point, we need to define what information or output are required
+%to be produced:
 
 \begin{enumerate}
-  \item[a] How we mark an object to be "done" --- 
-    combination of on-site and off-site. 
-    e.g. marked as done by on-site, but un-marked again by off-site later.
-  \item[b] Just use on-site quick data reduction only for on-site update 
-    within a day or a run, or record and use at off-site reduction and 
-    coordination?
-  \item[c] How to escalate outputs from on-site quick data reduction to 
-    (full) survey planning?
+ \item[\coll{a}] After a fully reduced and calibrated 1D spectrum is extracted,
+      what do you want to measure using the spectral features?
+ \item[\coll{b}] Could you briefly explain how you will measure them?
+      For example:
+      \begin{itemize}
+       \item Measure a redshift (or radial velocity) by fitting a
+         gaussian to an emission/absorption line (more than one
+         lines are fitted simultaneously if available).
+      \end{itemize}
+ \item[\coll{c}] Do you think there are any special recipes of data reduction 
+      and calibration that are needed to the data for your
+      (sub-)surveys but are not needed for other surveys?
+      Do you think there are any special from 
+      current assumed ``normal'' recipes or procedures shown in an 
+      attached slide on DRP?  
+ \item[\coll{d}] The data reduction and calibration follow many steps, so a
+      number of intermediate data will be formed. Are there anything
+      specific among them you will likely need/want to access to?
+      (e.g. un-wavelength calibrated spectra, spectra without sky subtraction) 
 \end{enumerate}
 
-
-\subsection{Functional requirements for producing science output (DRP)}
-
-This section covers requirements on data reduction pipeline from raw data to 
-reduced 1D spectrum and scientific values extracted from spectrum 
-\footnote{Check later section for reduced data and scientific values' archive.}.
-Science requirements including reduction and calibration accuracies shall 
-be discussed in separated for two modes. 
-
-\subsubsection{on-site quick data reduction pipeline}
+\subsubsection{Data QA and feedback to SPT}
 
 \begin{enumerate}
-  \item[a] Time frame for on-site data reduction: 
-    how "well" before beginning of next configuration?
-  \item[b] Do we need different data quality measurement per sub-survey? 
-  \item[c] What data characterization will be required: 
-    noise level, peak or line signal to noise ratio, etc.?
-    (to update a survey plan within a day)
+ \item[\coll{a}] While you are integrating certain objects, to monitor the
+      quality of your spectra, what kind of quantities and/or
+      diagnostics would you need to see? Earlier in this document,
+      S/N (of continuum and/or emission line which may depend on the
+      survey objectives) is presented as an example (c.f. integrated
+      S/N at SDSS). Is this appropriate, and how do you define S/N 
+      (e.g. continuum and/or emission/absorption line at certain wavelength)? 
+      Are there any others in
+      addition to S/N? Some examples may be:
+      \begin{itemize}
+       \item Record flux level and noise level separately.
+       \item Record fiber positioning errors (residual distances
+         from the target positions).
+      \end{itemize}
+ \item[\coll{b}] Data quality also strongly depends on sky conditions and
+      instrument status at individual exposures. What information
+      would you specifically want to be recorded?
+ \item[\coll{c}] In what criteria should each object be judged ``done''
+      (i.e. no more integration is needed)?
+ \item[\coll{d}] In what criteria should each field or each fiber configuraiton
+      be judged ``done'' (i.e. no more visit is needed to this
+      field/configuration)?
+ \item[\coll{e}] The estimation of e.g. S/N by quick DRP is perhaps less
+      accurate than full DRP, so more objects may be judged ``done''
+      after applying full DRP. Conversely, detailed reduction by
+      full DRP may reveal some errorneous features in the data that
+      are not detected by quick DRP and some objects may need to be
+      ``undone''. So is it correct that you would like to see if
+      updates are necessary to observation plans based on not only
+      the outputs from on-site quick DRP but also off-site full DRP
+      when available?
 \end{enumerate}
-
-
-\subsubsection{off-site full data reduction pipeline}
-
-
-For functional requirements, final output from data reduction pipeline will 
-be survey archive data, such as table of astrophysical values, reduced data 
-sets (1D spectra and required intermediate outputs). 
-
-On this point, we need to define what information or output are required to 
-be produced: 
-\begin{enumerate}
-  \item[a] Will all survey programs use the same reduction code, after 1D spectrum?
-    (need to be different from program to program?)
-  \item[b] What intermediate processing data are required, such as 1D with sky lines?
-  \item[c] What to do for calibration targets (star, sky, etc.)?
-\end{enumerate}
-
-Also refer attached slide for overview of current DRP design to this document. 
-
 
 \subsection{User interface requirements for survey coordination}
 
-User Interface could be defined as stored data and their visualization. And 
-requiremnts on the User Interface could be divided into two: 
-"What data we need to store", and "What panel we need".
-At this moment, system design is at conceptural level and no detailed design 
-is planned, discussion of user interface is just on a side of stored data, but 
-not actual panel list nor its mock-ups. 
+User Interface could be defined as stored data and their
+visualization. And requiremnts on the User Interface could be divided
+into two: "What data we need to store", and "What panel we need".  At
+this moment, system design is at conceptural level and no detailed
+design is planned, discussion of user interface is just on a side of
+stored data, but not actual panel list nor its mock-ups.
 
->From SDSS, Michael Strauss gave us a presentation titled "SDSS survey design 
+From SDSS, Michael Strauss gave us a presentation titled "SDSS survey design 
 \& operation: Inputs for PFS". 
 
 We will have three phases for survey organization, and requirements should be 
@@ -526,8 +639,6 @@ Among these three phases, "Survey operation" will be performed mainly by small
 groups (of e.g. PDs), as currently in operation at Subaru. In the other two 
 phases (and pre-/post- observation works?), many project members will attend 
 or check.
-
-
 
 \subsubsection{Pure organization / coordination phase (before starting survey)}
 
@@ -613,8 +724,6 @@ instrument control (e.g. performance of COBRA, A\&G/AG star).
 On interface between SPT and ICS, what is required for SPT? Such as, instrument 
 performance (e.g. fiber positioning error, A\&G/AG performance), instrument 
 error report. Of course, we could get all archived data from ICS to SPT. 
-
-
 
 \subsection{For survey archive}
 
