@@ -1,22 +1,18 @@
 \documentclass[a4paper,notitlepage]{article}
 \usepackage{ssn-format}
-\drafttrue
+%\drafttrue
 \title{Items to be discussed on science requirements on PFS software}
 \author{Atsushi Shimono + Naoyuki Tamura}
+\date{2013/11/29}
 
-\definecolor{ccols}{rgb}{0.7,0.25,0}
-\definecolor{ccolm}{rgb}{0,1,0}
-\definecolor{ccoll}{rgb}{0,0.25,0.5}
-\newcommand{\cols}[1]{\textcolor{ccols}{\thesubsubsection-#1}}
-\newcommand{\colm}[1]{\textcolor{ccolm}{\thesubsubsection-#1}}
-\newcommand{\coll}[1]{\textcolor{ccoll}{\thesubsubsection-#1}}
+\usepackage{sciops-scireq}
 
 \begin{document}
 
 \SSNID{00003}
-\SSNREV{000}
+\SSNREV{001}
 \SSNCATEGORY{ALL}
-\SSNChangeRecord{Rev.001 / First Release / 2013--11--16}
+\SSNChangeRecord{Rev.001 / First Release / 2013--11--29}
 \SSNReference{(none)}
 \SSNAttachment{(none)}
 \SSNWritten{Atsushi Shimono + Naoyuki Tamura}
@@ -37,6 +33,23 @@ of the requirements to the software components.
 
 From SDSS, Michael Strauss gave us a presentation titled "SDSS survey
 design \& operation: Inputs for PFS".
+
+\section{Reference documents/materials}
+
+\begin{itemize}
+ 
+ \item A presentation by Michael Strauss (Princeton) in the 5th
+       collaboration meeting at Sao Paulo, titled ``SDSS survey
+       design \& operation: Inputs for PFS'':
+       \url{http://sumire.pbworks.com/w/file/fetch/70573145/Strauss_sdss_spectroscopy.pdf}
+ \item An overview presentation of the current status of PFS data
+       reduction pipeline by Steve Bickerton (Kavli IPMU): 
+       \url{http://sumire.pbworks.com/w/file/71220051/pfs-dec2013-dataprod-sum.pptx}
+ \item SDSS Data Release website: \url{http://www.sdss.org/dr7/}
+ \item A presentation file from LAM about an example of archive system
+       for an other survey: 
+       \url{http://sumire.pbworks.com/w/file/71220426/vuds_olf_nov13.pptx}
+\end{itemize}
 
 \section{PFS Survey Basics}
 
@@ -101,26 +114,25 @@ plane will also be taken into account.
   \begin{center}
     \includegraphics[width=.75\linewidth]{sciops-scireq-slide-svyexp.png}
   \end{center}
-  \caption{Schematic view of procedure from list of catalogues to exposure 
+  \caption{Schematic view of procedure from list of catalogs to exposure 
     configurations}
   \label{fig:sciops-scireq-slide-svyexp}
 \end{figure}
 
 In Figure.~\ref{fig:sciops-scireq-slide-svyexp}, 
-each survey (A, B, C) will supply lists of targets (catalogues), 
+each survey (A, B, C) will supply lists of targets (catalogs), 
 and some survey might use several lists (e.g. A1, A2, and A3 at left-most 
 schematic). 
 Using these lists of targets, exposure fields (a, b, c, ...) will be defined 
 and targets will be assigned to each field (or more than one field if we 
 dither or make overlaps). 
 For each field, we will have 2396 circular fiber positioner patrol area 
-with some overrapped area (right two schematics). 
+with some overlapped area (right two schematics). 
 We assume to have multiple targets (objects) within each patrol area, 
 and software will assign targets into fiber positioners and exposures. 
 Some targets requires multiple exposures to complete required exposure time, 
 and multiple exposures will be assigned for these targets
 (middle bottom table). 
-
 
 \subsubsection{Observation at the summit}
 
@@ -140,7 +152,7 @@ Figure.~\ref{fig:sciops-scireq-slide-oneexp}
 ). Results from this on-site quick data reduction will be transferred to
 survey planning \& tracking software (SPT) for records so that the operators
 at the summit can check and consider them for subsequent exposures, 
-also SPT will check reported data quality assuarance data and update survey 
+also SPT will check reported data quality assurance data and update survey 
 plan for second next exposure from the exposure 
 (see also Section.~\ref{sec:qa}). 
 Some
@@ -197,7 +209,7 @@ Figure.~\ref{fig:sciops-scireq-drp-slide}):
 
 Details will be described elsewhere (also in a slide attached to this note) 
 by the DRP development team (some
-already exist in the PDR techincal document and presentations in the PDR
+already exist in the PDR technical document and presentations in the PDR
 and other collaboration meetings).
 
 %Current assumpsions are 
@@ -245,7 +257,7 @@ level..}.
 
 As survey observation progresses, more data are integrated and the
 quality of spectra is improved. The quick and full DRPs will send the
-information of the quality of existing spectra on a individal object
+information of the quality of existing spectra on a individual object
 basis to survey planning and tracking software (SPT). {\it Some criteria
 need to be defined judge whether or not enough data have been taken for
 single fields and/or individual objects.} Once a single object and/or
@@ -307,7 +319,7 @@ Figure.~\ref{fig:sciops-scireq-slide-softcoord}:
 
 From data point of view, each package will handle data or table as
 color-coded in Figure.~\ref{fig:sciops-scireq-slide-data}. Supplied
-objects by catalogues from science team will be mapped into exposure
+objects by catalogs from science team will be mapped into exposure
 field lists. For each exposure field list, multiple exposure
 configuration will be created, and results or intermediate outputs will
 be attached to each configuration and each field list.  For each
@@ -318,7 +330,7 @@ attached after execution of exposure.
   \begin{center}
     \includegraphics[width=.75\linewidth]{sciops-scireq-slide-data.png}
   \end{center}
-  \caption{Relationship between supplied and exposed data from catalogue
+  \caption{Relationship between supplied and exposed data from catalog
     to survey tracking data} \label{fig:sciops-scireq-slide-data}
 \end{figure}
 
@@ -329,15 +341,14 @@ attached after execution of exposure.
 
 In this section, a list of questions to the science team and future
 discussion items are presented, in order to collect requirements needed
-to develope the listed software packages.
+to develop the listed software packages.
 
 The priorities \& types of questions/discussion items are color-coded as
 follows:
 \begin{enumerate}
   \item[\colm{x}] High priority. Replies are requested in a short time
            scale, like 1 month.
-  \item[\cols{x}] Less urgent, so please send replies in 6 months.
-  \item[\coll{x}] Others
+  \item[\colm{x}] Less urgent, so please send replies in 6 months.
 \end{enumerate}
 
 {\bf Important notes:}
@@ -359,9 +370,9 @@ follows:
     \item My survey has different types of requirements such as ... 
     \item ... etc
        \end{itemize}
- \item The questions presetend in this document are the first
+ \item The questions presented in this document are the first
    set. Your replies to them will then allow us to send you more
-   advanced questins. There are a number of subjects which need to be
+   advanced questions. There are a number of subjects which need to be
    iteratively discussed for us to correctly understand requirements
    for relevant implementations.
 \end{itemize}
@@ -369,10 +380,10 @@ follows:
 \subsection{Survey basics}
 
 \begin{enumerate}
-  \item[\colm{a}] Complete Table~\ref{tab:sciops-scireq-subsvy} by
+  \item[\cols{a}] Complete Table~\ref{tab:sciops-scireq-subsvy} by
            checking the numbers that already exist, and giving
            typical numbers to the slots currently occupied by
-           ``?''. If ANY corrections and/or additions are necesary,
+           ``?''. If ANY corrections and/or additions are necessary,
            please send them to us.
 \end{enumerate}
 
@@ -381,7 +392,7 @@ follows:
 \subsubsection{Target list}
 
 \begin{enumerate}
- \item[\colm{a}] How would you prepare master catalog(s)?  Please
+ \item[\cols{a}] How would you prepare master catalog(s)?  Please
           include some explanations of your ideas about the key
           issues as listed below:
           \begin{itemize}
@@ -401,7 +412,7 @@ follows:
 \subsubsection{Field definition}
 
 \begin{enumerate}
- \item[\colm{a}] How do you want to determine field centers and position
+ \item[\cols{a}] How do you want to determine field centers and position
           angles of the fields? Are there any possible optimization
           processes in your mind? Possible examples may be:
           \begin{itemize}
@@ -414,7 +425,7 @@ follows:
              field.
            \item Pre-defined over entire survey area. 
           \end{itemize}
- \item[\colm{b}] Do you need to visit individual fields multiple times?
+ \item[\cols{b}] Do you need to visit individual fields multiple times?
           If yes:
           \begin{itemize}
            \item How would you define the number of visits? 
@@ -423,7 +434,7 @@ follows:
            \item Would you keep the field center and position angle
              for all the visits?
           \end{itemize}
- \item[\colm{c}] Do you need to have an overlap between neighboring
+ \item[\cols{c}] Do you need to have an overlap between neighboring
           fields? If yes, how would you want to define such an
           overlap?
 \end{enumerate}
@@ -438,7 +449,7 @@ may also want to mix science targets with other sub-surveys into your
 fiber allocation.
 
 \begin{enumerate}
-  \item[\coll{a}] Based on what kind of criteria/rules/procedures would
+  \item[\cols{a}] Based on what kind of criteria/rules/procedures would
            you like to select science targets to which fibers are
            allocated? Some possible examples are:
            \begin{itemize}
@@ -449,10 +460,10 @@ fiber allocation.
               objects or categories of them in the master
               catalog.
            \end{itemize}
-  \item[\coll{b}] If you need to visit single field multiple times, how
+  \item[\colm{b}] If you need to visit single field multiple times, how
            would you want to split objects into subsets for the
            multiple visits and determine fiber allocations?
-  \item[\coll{c}] How do you want to split fibers into the targets for
+  \item[\colm{c}] How do you want to split fibers into the targets for
            your survey and those for other PFS sub-surveys, if
            required?
 %   \begin{itemize}
@@ -461,7 +472,7 @@ fiber allocation.
 %     \item How to do? Integrate into single merit function, or threshold like 
 %       "Survey A index 1 need to be observed up to 80\%", etc.
 %    \end{itemize}
-  \item[\coll{d}] What type of objects (stars) would you select as
+  \item[\cols{d}] What type of objects (stars) would you select as
            calibration stars? How many of them will be enough for
            your goals of calibration (See
            Table.~\ref{tab:sciops-scireq-subsvy}), accounting for
@@ -470,10 +481,10 @@ fiber allocation.
            \footnote{PFS software will also query catalog(s) of stars 
            supplied by survey operators, 
            independently from sub-survey catalog(s).} 
-  \item[\coll{e}] How would you define ``blank'' sky areas for sky
+  \item[\cols{e}] How would you define ``blank'' sky areas for sky
            fibers? Do you think you can define ``blank'' sky areas
            just based on the information in your master catalog(s)?
-  \item[\coll{f}] How do you want to spatially distribute the sky fibers
+  \item[\cols{f}] How do you want to spatially distribute the sky fibers
            in one field?
 \end{enumerate}
 
@@ -493,7 +504,7 @@ fiber allocation.
 \subsection{Observation execution}
 
 \begin{enumerate}
-  \item[\coll{a}] Will you possibly want to visit a certain field
+  \item[\cols{a}] Will you possibly want to visit a certain field
            multiple times in different nights/runs/seasons when it
            is technically feasible?
            Or a certain field need to be visited within a single 
@@ -508,15 +519,14 @@ fiber allocation.
            (for the sake of minimizing Focal Ratio Degradation (FRD)
            variation, exploiting the hexagonal symmetry of the focal
            plane).}
-  \item[\coll{b}] As mentioned in the other parts of this document, we
+  \item[\cols{b}] As mentioned in the other parts of this document, we
            expect some QA process is performed and based on the
            information from it observation strategy (e.g. field
            definition, fiber configuration, required number of
            exposures, etc) may be updated. How often would you
-           likely want to apply such updates? Next possible exposure
-           \footnote{QA by on-site quick DR will be performed during next 
-           exposure.}?
-           Between nights?
+           likely want to apply such updates? Should it have to be done
+           within the same night \footnote{QA by on-site quick DR will
+       be performed during next exposure.}? Or, next nights is OK?
 %  \item[\colm{c}] Some survey requires software to stop exposure after certain 
 %    signal to noise ratio achieved. 
 %    If we expose the same field with the same fiber configuration
@@ -534,7 +544,7 @@ fiber allocation.
 %But if not, we might need to care of many things... 
 %
 %\begin{enumerate}
-%  \item[\cols{a}] How many targets we can assume per one fiber positioner patrol 
+%  \item[\colm{a}] How many targets we can assume per one fiber positioner patrol 
 %    area?
 %  \item[b] If we have multiple targets within one fiber positioner patrol 
 %    area, set of targets per patrol area will differ field by field 
@@ -566,22 +576,22 @@ fiber allocation.
 %to be produced:
 
 \begin{enumerate}
- \item[\coll{a}] After a fully reduced and calibrated 1D spectrum is extracted,
+ \item[\cols{a}] After a fully reduced and calibrated 1D spectrum is extracted,
       what do you want to measure using the spectral features?
- \item[\coll{b}] Could you briefly explain how you will measure them?
+ \item[\cols{b}] Could you briefly explain how you will measure them?
       For example:
       \begin{itemize}
        \item Measure a redshift (or radial velocity) by fitting a
          gaussian to an emission/absorption line (more than one
          lines are fitted simultaneously if available).
       \end{itemize}
- \item[\coll{c}] Do you think there are any special recipes of data reduction 
+ \item[\colm{c}] Do you think there are any special recipes of data reduction 
       and calibration that are needed to the data for your
       (sub-)surveys but are not needed for other surveys?
       Do you think there are any special from 
       current assumed ``normal'' recipes or procedures shown in an 
       attached slide on DRP?  
- \item[\coll{d}] The data reduction and calibration follow many steps, so a
+ \item[\colm{d}] The data reduction and calibration follow many steps, so a
       number of intermediate data will be formed. Are there anything
       specific among them you will likely need/want to access to?
       (e.g. un-wavelength calibrated spectra, spectra without sky subtraction) 
@@ -590,7 +600,7 @@ fiber allocation.
 \subsubsection{Data QA and feedback to SPT}
 
 \begin{enumerate}
- \item[\coll{a}] While you are integrating certain objects, to monitor the
+ \item[\cols{a}] While you are integrating certain objects, to monitor the
       quality of your spectra, what kind of quantities and/or
       diagnostics would you need to see? Earlier in this document,
       S/N (of continuum and/or emission line which may depend on the
@@ -604,181 +614,110 @@ fiber allocation.
        \item Record fiber positioning errors (residual distances
          from the target positions).
       \end{itemize}
- \item[\coll{b}] Data quality also strongly depends on sky conditions and
+ \item[\colm{b}] Data quality also strongly depends on sky conditions and
       instrument status at individual exposures. What information
       would you specifically want to be recorded?
- \item[\coll{c}] In what criteria should each object be judged ``done''
+ \item[\cols{c}] In what criteria should each object be judged ``done''
       (i.e. no more integration is needed)?
- \item[\coll{d}] In what criteria should each field or each fiber configuraiton
+ \item[\cols{d}] In what criteria should each field or each fiber configuration
       be judged ``done'' (i.e. no more visit is needed to this
       field/configuration)?
- \item[\coll{e}] The estimation of e.g. S/N by quick DRP is perhaps less
+ \item[\cols{e}] The estimation of e.g. S/N by quick DRP is perhaps less
       accurate than full DRP, so more objects may be judged ``done''
       after applying full DRP. Conversely, detailed reduction by
-      full DRP may reveal some errorneous features in the data that
+      full DRP may reveal some erroneous features in the data that
       are not detected by quick DRP and some objects may need to be
       ``undone''. So is it correct that you would like to see if
       updates are necessary to observation plans based on not only
       the outputs from on-site quick DRP but also off-site full DRP
       when available?
+ \item[\cols{f}] Do you think an automatic release of status/progress
+          report per night and/or per run (c.f. Subaru observation
+          software system (SOSS) releases a PDF after each night).
 \end{enumerate}
 
-\subsection{User interface requirements for survey coordination}
+\subsection{User interface requirements}
 
-Users approach to software components in order to access to some data
-and/or accomplish some tasks. Hence requirements for user Interface
-should be about what data to be stored and how to visualize them.
-%And requiremnts on the User Interface could be divided into two: "What
-%data we need to store", and "What panel we need". At this moment,
-%system design is at conceptural level and no detailed design is planned,
-In this document, requirements to data types are mainly discussed, and
-those for visualization will be discussed in more detail elsewhere in
-future.
-
-Below, we will present a list of questions and discussion items along
-the three phases in processing a survey:
-\begin{enumerate}
-  \item[1] Preparation 
-  \item[2] Observation execution and data reduction
-  \item[3] Monitoring of survey progress
-\end{enumerate}
-So far we assume "observation execution" will be performed mainly by
-small groups of people (c.f. night operation at Subaru is carried out by
-one telescope operator, one instrument operator (usually support
-scientist), and max. 4 observers). In the other two phases, many project
-members will attend and interact remotely from various places.
+Users approach to software components to access to some data and/or
+accomplish some tasks. Once the functional requirements to the software
+components are clarified, other requirements such as what data to be
+stored and how to visualize them (i.e. user interface requirements) can
+be discussed. At this moment, we are trying to understand their
+functional requirements by having replies from the science team to the
+inquiries presented earlier in this document, so we will only present
+the titles of subsections in our mind and will compose the contents with
+a list of questions later.
 
 \subsubsection{Preparation}
 
-In this phase, given a master catalog of target objects is provided
-initially, SPT will define fields and then ETS will make fiber
-allocation employing some rules of selection and prioritization.
+\subsubsection{Observation execution and data reduction}
 
-SPT will output, at least, a list of field centers and position angles
-of defined fields, and object lists residing in each field. Currently we
-assume the object list has the same format as the master catalog, since
-a subset of the parameters therein may be used in the process of fiber
-allocation by ETS.
-
-\begin{enumerate}
-  \item[a] Would you want to receive the data output by SPT in some
-    specific format? Or, as long as a visualization tool is prepared
-    to show the defined fields etc, any format would be acceptable?
-  \item[a] Are there any other outputs expected from SPT? (e.g. a log
-    file recording some details of how fields are defined)
-  \item[b] What input to and output from ETS shall be stored?
-    \begin{itemize}
-      \item Decision tables? Results from merit function? Or any other 
-        intermediate products or decision data?
-      \item Pre-input data used within SPT? - relates what algorithm we will use.
-      \item To ETS, all output from ETS will be saved by SPT, what ETS need 
-        to output? (section before)
-    \end{itemize}
-  \item[c] How we do for history of planning?
-    \begin{enumerate}
-      \item[c1] We need at least to save snapshots?
-      \item[c2] How do we deal with version of catalog itself? Like using master 
-        object ID, among all supplied object catalogue?
-    \end{enumerate}
-\end{enumerate}
-
-\subsubsection{Survey operation \& data reduction}
-
-Per night operation will be similar to classical typed observation (by
-means of checking possible target fields (all, next), and statistics
-from exposed frames (or on-site DRP) will be used for operation.
-
-\paragraph{For operation}
-
-\begin{enumerate}
-  \item[a] What information shall be presented to operator to understand and 
-    decide what operator need to and can do per night (or for next exposure)?
-  \item[b] How level do we need to operate survey observation automatically?
-    As for now, assuming somehow similar to classical typed observation..
-\end{enumerate}
-
-\paragraph{Recording telemetry and status}
-
-\begin{enumerate}
-  \item[a] What status and telemetry shall be transferred from ICS to SPT 
-    related with exposure.
-  \item[b] What statistics from on-site (quick) DR shall be recorded, all?
-\end{enumerate}
-
-\subsubsection{Monitoring of survey progress - ideas}
-
-This covers checking progress status per survey, per field, per object: 
-time, S/N etc. Could be one additional layer to survey archive??
-
-\begin{enumerate}
-  \item[a] What statistics need to be archived from off-site full-suite DR?
-    \begin{itemize}
-      \item per frame, per spectra, per field, per object
-      \item into FITS header of processed image or survey record database?
-    \end{itemize}
-  \item[b] STP need to keep information in hierarchical to be displayed as layered UI.
-  \item[c] How about progress history? -- we will integrate exposures per object
-  \item[d] Searchable table : this will be UI design, but capable to be searchable 
-    by many indexes??
-\end{enumerate}
+\subsubsection{Monitoring of survey progress}
 
 \subsubsection{Interface to ICS}
 
-Many information required by SPT will be generated by other packages, we need 
-to define what we need to keep for survey planning and tracking, and to 
-allocate these requirements to other packages. 
 
-Based on design concept of "keeping all information as much as possible", 
-ICS will keep all telemetry (interval TBD) and logs (e.g. command, status), 
-to use for defect detection and instrument performance check on the 
-instrument control (e.g. performance of COBRA, A\&G/AG star).
-On interface between SPT and ICS, what is required for SPT? Such as, instrument 
-performance (e.g. fiber positioning error, A\&G/AG performance), instrument 
-error report. Of course, we could get all archived data from ICS to SPT. 
+\subsection{Survey data archive}
 
-\subsection{For survey archive}
+\begin{enumerate}
+ \item[\cols{a}] What kind of survey archive system do you need/want?
+          What would it need to be useful for? Could you tell us
+          your ideas, taking care of such key words as follows:
+          \begin{itemize}
+           \item Data release
+           \item Software release
+           \item Survey plan \& schedule
+           \item Survey progress \& status report
+           \item Technical reports
+             \begin{itemize}
+              \item Instrument performance
+              \item Before and after of trouble shooting,
+                maintenance work, upgrade, etc
+              \item Features in data, tips for
+                reduction \& calibration, etc
+             \end{itemize}
+           \item Public information \& outreach
+          \end{itemize}
+\end{enumerate}
 
-Survey archive requirement and design is not well developed.
-
+Below a couple of examples from existing survey archives are presented
+as references/starting points of discussion:
 \begin{itemize}
-  \item SDSS DR web as a starting point for a set of requiremnt?
-  \item Automatic release of status/progress report per night or per run
-    (As Gen2 of Subaru is doing: release PDF after each night)
-  \item Visualization via kml? 
-    (<kml xmlns="http://www.opengis.net/kml/2.2" hint="target=sky">)
+ \item SDSS Data Release website: \url{http://www.sdss.org/dr7/}
+ \item A presentation file from LAM about an example of archive system
+       for an other survey: 
+% \item Visualization via kml? 
+%   (<kml xmlns="http://www.opengis.net/kml/2.2" hint="target=sky">)
 \end{itemize}
 
-Also, sample from LAM is attached to this document in separated. 
+\subsection{Data release}
 
-\subsection{For continuous data release}
+As a background of survey archive, we need to perform continuous data
+reduction and periodic re-reduction of full data set.  Single(?) data
+reduction after each observation (single day or single run) could be
+performed on-premise (or even using on-site DR facility at Hilo supplied
+by us, although we need to care about already exposed data set...).  And
+this will not be an issue. For continuous data release like a "DR" of
+SDSS, Robert Lupton suggested to go cloud. Total "raw" data set will be
+around 0.5PB (to 1PB), and even after reduction it will be a level of
+1PB including intermediate data.  It could be possible.
 
-As a background of survey archive, we need to perform continuous data 
-reduction and periodic re-reduction of full data set.
-Single(?) data reduction after each observation (single day or single run) 
-could be performed on-premise (or even using on-site DR facility at Hilo 
-supplied by us, although we need to care about already exposed data set...). 
-And this will not be an issue.
-For continuous data release like a "DR" of SDSS, Robert Lupton suggested to 
-go cloud. Total "raw" data set will be around 0.5PB (to 1PB), and even after 
-reduction it will be a level of 1PB including intermediate data.
-It could be possible.
-
-\begin{itemize}
-  \item Do we need such periodical data release?
-  \item What do we change on each data release --- pipeline upgrade?
-\end{itemize}
+\begin{enumerate}
+  \item[\cols{a}] Do we need such periodical data release?
+  \item[\colm{b}] What do we change on each data release --- pipeline upgrade?
+\end{enumerate}
 
 
 \subsection{Other requirements for calibration}
 
 Any requirements on calibrations?
 
-\begin{itemize}
-  \item Statistics of calibration? --- to check stability in short and long 
+\begin{enumerate}
+  \item[\colm{a}] Statistics of calibration? --- to check stability in short and long 
     term
-  \item Cross-check by calibrating calibration object by themselves within a 
+  \item[\colm{b}] Cross-check by calibrating calibration object by themselves within a 
     frame
-\end{itemize}
+\end{enumerate}
 
 \section*{Appendix: System-level requirements associated with data reduction}
 
